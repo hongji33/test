@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&family=Fraunces:ital,opsz,wght@1,9..144,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght=300;400;600;700&family=Fraunces:ital,opsz,wght=1,9..144,700&display=swap');
         
         :root {
             --primary: #4f46e5;
@@ -103,9 +103,10 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-40 glass-nav border-b border-slate-200/50">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="flex items-center group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <!-- 로고 클릭 시 최상단으로 스크롤이동 및 호버 시 옆으로 가던 움직임(rotate, scale) 완전 배제 -->
+            <div class="flex items-center cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <div class="relative mr-3 overflow-hidden rounded-xl">
-                    <img src="./images/logo.png" alt="Logo" class="h-10 w-auto transition-all duration-500 ease-out group-hover:rotate-[12deg] group-hover:scale-110" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
+                    <img src="./images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
                 </div>
                 <div class="flex flex-col">
                     <span class="text-lg font-bold tracking-tight text-slate-800">오션 동영상 컨텐츠 제작하기</span>
@@ -116,6 +117,7 @@
             <div class="hidden md:flex items-center space-x-10 text-sm font-semibold text-slate-600">
                 <a href="#about" class="hover:text-indigo-600 transition-colors">스토리</a>
                 <a href="#roadmap" class="hover:text-indigo-600 transition-colors">로드맵</a>
+                <a href="javascript:void(0)" onclick="openGlossary()" class="text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1"><i class="fa-solid fa-book-open text-xs"></i> 용어사전</a>
                 <a href="#mission" class="hover:text-indigo-600 transition-colors">영상미션</a>
                 <a href="#classes" class="hover:text-indigo-600 transition-colors">미술수업</a>
                 <a href="#youtube" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md hover:shadow-indigo-200">YouTube</a>
@@ -224,7 +226,12 @@
             <div class="text-center max-w-3xl mx-auto mb-16 reveal">
                 <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-full">Level-up Roadmap</span>
                 <h2 class="text-4xl font-bold text-slate-900 mt-4 mb-4">미디어 크리에이터 성장 로드맵</h2>
-                <p class="text-slate-500">기초부터 숏폼 영화제 출품까지, 단계별 배움터와 흥미진진한 3단계 퀴즈를 정복해 보세요!</p>
+                <p class="text-slate-500 mb-6">기초부터 숏폼 영화제 출품까지, 단계별 배움터와 흥미진진한 3단계 퀴즈를 정복해 보세요!</p>
+                
+                <!-- 용어사전 오픈 단독 버튼 배너 추가 -->
+                <button onclick="openGlossary()" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-sky-500 text-white font-bold text-sm px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
+                    <i class="fa-solid fa-book-open"></i> 📖 잠깐! 알쏭달쏭 미디어 용어사전 먼저 정복하기
+                </button>
             </div>
 
             <!-- 카드 레이아웃 -->
@@ -570,7 +577,7 @@
                         미술 수업 내용, 미디어 동아리 가입, 진로 상담 등 궁금한 점이 있다면 편하게 적어 남겨주세요.
                     </p>
 
-                    <!-- 일반 질문하기 외에는 안보이게 동적 제어되는 영역 -->
+                    <!-- 일반 질문하기 외에는 안보이게 동적 제어되는 영역 (요구사항: 퀴즈/학습 등에서 비노출) -->
                     <div class="space-y-6" id="sidebarExtraInfo">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
@@ -667,7 +674,7 @@
                     </form>
                 </div>
 
-                <!-- 2) 인터랙티브 다단계 학습/퀴즈 삽입 플레이스홀더 -->
+                <!-- 2) 인터랙티브 다단계 학습/퀴즈/용어사전 삽입 플레이스홀더 -->
                 <div id="roadmapContentWrapper" class="hidden flex-col justify-between h-full min-h-[420px] space-y-4">
                     <div id="dynamicRoadmapContent" class="text-sm text-slate-600 leading-relaxed overflow-y-auto max-h-[58vh] pr-2">
                         <!-- 콘텐츠가 동적으로 업데이트 됨 -->
@@ -740,6 +747,10 @@
         let currentSlideIndex = 0;
         let activeQuizStep = 1;
         let quizScore = 0;
+
+        // 용어사전 단어 매칭 게임용 임시 메모리 변수
+        let selectedWordBtn = null;
+        let matchedCount = 0;
 
         function openModal(mode) {
             // 초기 설정 리셋
@@ -909,7 +920,7 @@
                 ],
                 quizzes: [
                     {
-                        question: "화면을 가로지르는 수평선과 수직선을 그어 대상을 중앙이나 교차점에 맞추어 가장 완벽한 화면 구도를 이끌어내는 이 기본 법칙의 명칭은 무엇인가요?",
+                        question: "화면을 가로지르는 수평선และ 수직선을 그어 대상을 중앙이나 교차점에 맞추어 가장 완벽한 화면 구도를 이끌어내는 이 기본 법칙의 명칭은 무엇인가요?",
                         options: ["1. 4각 구도", "2. 3분할 구도", "3. 크로마키 비율", "4. 원형 구도"],
                         answer: 2, // 2번이 정답
                         feedback: "맞아요! 3분할 구도는 전 세계 감독님들이 가장 사랑하는 비율이랍니다."
@@ -1053,6 +1064,40 @@
             }
         };
 
+        // 미디어 용어사전 가상 DB 정의
+        const GLOSSARY_TERMS = [
+            {
+                term: "종횡비 (Aspect Ratio)",
+                img: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&q=80&w=500",
+                easy: "도화지 가로/세로 비율!",
+                desc: "화면의 가로 길이와 세로 길이 비율을 말합니다. 극장 영화나 일반 모니터는 16:9 가로 비율을 주로 쓰고, 스마트폰 쇼츠나 릴스 같은 숏폼은 완전히 세워진 9:16 종횡비를 사용합니다."
+            },
+            {
+                term: "프레임 레이트 (FPS)",
+                img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=500",
+                easy: "플립북 낱장 카드 넘기는 속도!",
+                desc: "FPS(Frames Per Second)는 초당 보여지는 정지 이미지 사진 개수를 뜻해요. 24fps는 감성적인 영화 느낌, 30fps는 흔한 방송 예능 느낌, 60fps는 물 흐르듯 아주 매끄럽고 부드러운 댄스나 게임 화면에 적격입니다."
+            },
+            {
+                term: "크로마키 (Chroma Key)",
+                img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=500",
+                easy: "녹색 스크린을 지우는 마법 투명망토!",
+                desc: "인물의 피부톤과 가장 정반대되는 녹색(그린스크린) 또는 파란색 배경에서 촬영한 후, 편집 프로그램에서 해당 녹색 영역만 투명하게 구멍을 뚫어 가상의 우주나 바다 배경을 부드럽게 합성하는 기술입니다."
+            },
+            {
+                term: "비트 싱크 (Beat Sync)",
+                img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=500",
+                easy: "음악 쿵! 하는 소리에 맞춰 화면 챡! 바뀌기!",
+                desc: "음악의 드럼 비트나 강력한 클라이맥스 터지는 비트에 칼같이 맞춰 장면을 전환하는 기법입니다. 눈으로 보는 영상과 귀로 듣는 비트가 한 호흡으로 어우러져 엄청난 쾌감과 몰입감을 줍니다."
+            },
+            {
+                term: "컷 편집 (Cut Editing)",
+                img: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=500",
+                easy: "쓸데없는 말실수 가위질로 쏙 도려내기!",
+                desc: "말을 하다가 생기는 공백('음...', '어...')이나 마음에 안 드는 흔들린 부분을 지우고 필요한 알짜배기 부분만 착착 이어붙이는 기본 중의 기본이자 가장 중요한 편집 단계입니다."
+            }
+        ];
+
         // 모달에서 특정 레벨 배우기 카드 오픈
         function openStudy(levelKey) {
             currentLevelKey = levelKey;
@@ -1162,7 +1207,7 @@
             renderQuizStep();
         }
 
-        // 개별 퀴즈 스텝 렌더러 (총 3문제 지원)
+        // 개별 퀴즈 스텝 렌더러 (자동 이동 대신 수동 "다음" 버튼 제공으로 유저 스트레스 방지)
         function renderQuizStep() {
             const data = ROADMAP_DATA[currentLevelKey];
             const quiz = data.quizzes[activeQuizStep - 1];
@@ -1178,47 +1223,64 @@
                         <i class="fa-solid fa-circle-question text-amber-500 mr-2"></i>Q${activeQuizStep}. ${quiz.question}
                     </h4>
 
-                    <!-- 보기 리스트 디자인 개선 -->
-                    <div class="space-y-2.5 pt-2">
+                    <!-- 보기 리스트 -->
+                    <div id="quizOptionsContainer" class="space-y-2.5 pt-2">
                         ${quiz.options.map((option, idx) => `
-                            <button onclick="selectOption(${idx + 1})" class="w-full text-left p-4 bg-slate-50 hover:bg-indigo-50 rounded-2xl text-xs md:text-sm text-slate-700 font-semibold border border-slate-100 hover:border-indigo-200 transition">
+                            <button onclick="selectOption(${idx + 1})" class="quiz-opt-btn w-full text-left p-4 bg-slate-50 hover:bg-indigo-50 rounded-2xl text-xs md:text-sm text-slate-700 font-semibold border border-slate-100 hover:border-indigo-200 transition">
                                 ${option}
                             </button>
                         `).join('')}
                     </div>
 
-                    <p id="quizFeedback" class="text-xs font-bold mt-2 p-3 rounded-xl hidden transition-all duration-300"></p>
+                    <!-- 결과와 수동 다음 버튼 출력창 -->
+                    <div id="quizFeedbackArea" class="hidden space-y-3 pt-3">
+                        <p id="quizFeedback" class="text-xs font-bold p-3 rounded-xl transition-all duration-300"></p>
+                        <button onclick="advanceQuiz()" class="w-full py-3 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition flex items-center justify-center gap-2 shadow-md">
+                            <span>다음 퀴즈 풀기</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             `;
         }
 
-        // 보기 선택 시 판정 처리
+        // 보기 선택 시 판정 처리 (수동 버튼 트리거 지원)
         function selectOption(selectedVal) {
             const data = ROADMAP_DATA[currentLevelKey];
             const quiz = data.quizzes[activeQuizStep - 1];
+            
+            const feedbackArea = document.getElementById('quizFeedbackArea');
             const feedback = document.getElementById('quizFeedback');
+            const options = document.querySelectorAll('.quiz-opt-btn');
 
-            feedback.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800');
+            // 옵션 클릭 잠금
+            options.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'pointer-events-none');
+            });
+
+            feedback.className = "text-xs font-bold p-3 rounded-xl transition-all duration-300";
 
             if (selectedVal === quiz.answer) {
                 quizScore++;
                 feedback.innerText = `⭕ 정답입니다! ${quiz.feedback}`;
-                feedback.classList.add('bg-green-50', 'text-green-800');
+                feedback.classList.add('bg-green-100', 'text-green-800');
             } else {
                 feedback.innerText = `❌ 아쉬워요! 정답은 ${quiz.answer}번이었습니다.`;
-                feedback.classList.add('bg-red-50', 'text-red-800');
+                feedback.classList.add('bg-red-100', 'text-red-800');
             }
-            feedback.classList.remove('hidden');
 
-            // 1.5초 후 다음 문제로 자동 이동
-            setTimeout(() => {
-                if (activeQuizStep < 3) {
-                    activeQuizStep++;
-                    renderQuizStep();
-                } else {
-                    renderQuizResult();
-                }
-            }, 1800);
+            // 피드백 영역 즉각 노출
+            feedbackArea.classList.remove('hidden');
+        }
+
+        // 수동 다음으로 이동 핸들러
+        function advanceQuiz() {
+            if (activeQuizStep < 3) {
+                activeQuizStep++;
+                renderQuizStep();
+            } else {
+                renderQuizResult();
+            }
         }
 
         // 퀴즈 결과 정산부
@@ -1250,6 +1312,198 @@
                     </div>
                 </div>
             `;
+        }
+
+        /* ================= 신규 추가: 미디어 용어사전 모달 전용 로직 ================= */
+        function openGlossary() {
+            openModal('roadmap');
+            generalFormWrapper.classList.add('hidden');
+            roadmapContentWrapper.classList.remove('hidden');
+            sidebarExtraInfo.classList.add('hidden'); // 미술실 위치 등 제거
+
+            // 보라와 하늘색 중간 톤으로 사이드바 테마 변환
+            modalLeftSidebar.className = "w-full md:w-[40%] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-indigo-700 to-sky-600";
+
+            sidebarTitle.innerText = "미디어 용어사전";
+            sidebarDesc.innerText = "중학생 크리에이터가 꼭 알아야 할 5대 단어를 모았습니다! 카드를 터치해서 비유 설명을 들은 뒤 매칭 게임도 해보세요.";
+
+            renderGlossaryHub();
+        }
+
+        // 용어사전 메인 허브 렌더러
+        function renderGlossaryHub() {
+            dynamicRoadmapContent.innerHTML = `
+                <div class="space-y-4 animate-fade-in">
+                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+                        <span>GLOSSARY CENTER</span>
+                        <span class="bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md">총 5개 용어 탑재</span>
+                    </div>
+
+                    <!-- 단어장 목록 리스트 -->
+                    <div class="space-y-2.5 max-h-[45vh] overflow-y-auto pr-1">
+                        ${GLOSSARY_TERMS.map((item, idx) => `
+                            <div onclick="showGlossaryDetail(${idx})" class="p-4 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border border-slate-100 hover:border-indigo-100 cursor-pointer transition flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+                                    <img src="${item.img}" alt="${item.term}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-slate-900 text-sm">${item.term}</h4>
+                                    <p class="text-indigo-600 text-[11px] font-semibold mt-0.5">💡 한 줄 요약: ${item.easy}</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex justify-between items-center">
+                        <!-- 재미있는 미니 게임 메뉴 -->
+                        <button onclick="startWordMatchGame()" class="px-5 py-3 bg-gradient-to-r from-indigo-600 to-sky-500 hover:from-indigo-700 hover:to-sky-600 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-gamepad"></i> 🎮 미니 매칭 게임 시작하기!
+                        </button>
+                        <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">닫기</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 개별 용어 세부 정보 렌더러 (상세 일상 설명 & 이미지 가이드)
+        function showGlossaryDetail(index) {
+            const item = GLOSSARY_TERMS[index];
+            dynamicRoadmapContent.innerHTML = `
+                <div class="space-y-4 animate-fade-in">
+                    <button onclick="renderGlossaryHub()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline">
+                        <i class="fa-solid fa-arrow-left"></i> 목록으로 돌아가기
+                    </button>
+
+                    <!-- 이미지 가이드라인 -->
+                    <div class="w-full h-44 rounded-2xl overflow-hidden relative shadow-sm bg-slate-100">
+                        <img src="${item.img}" alt="${item.term}" class="w-full h-full object-cover">
+                        <div class="absolute bottom-3 left-3 bg-indigo-600/80 backdrop-blur-sm px-2.5 py-1 rounded-lg text-white text-[10px] font-bold">
+                            🔍 이미지 가이드
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-indigo-950 text-lg">${item.term}</h4>
+                        <div class="bg-indigo-50 text-indigo-800 p-3 rounded-xl text-xs font-bold leading-snug">
+                            💡 쉽고 재밌는 이해: <br><span class="text-slate-700 font-medium">${item.easy}</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h5 class="text-xs font-bold text-slate-400 uppercase tracking-widest">상세 튜토리얼</h5>
+                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed">${item.desc}</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="renderGlossaryHub()" class="px-5 py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">확인 완료</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 용어사전 미니게임: 카드 짝 맞추기 (단어와 설명을 맞추는 재미있는 미니 퍼즐)
+        function startWordMatchGame() {
+            matchedCount = 0;
+            selectedWordBtn = null;
+
+            // 좌측 단어카드 리스트 생성 및 무작위 셔플
+            const words = GLOSSARY_TERMS.map((item, idx) => ({ id: idx, text: item.term.split(' ')[0], type: 'word' }));
+            // 우측 뜻카드 리스트 생성 및 무작위 셔플
+            const definitions = GLOSSARY_TERMS.map((item, idx) => ({ id: idx, text: item.easy, type: 'def' }));
+
+            // 셔플 함수
+            const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+            const shuffledWords = shuffle([...words]);
+            const shuffledDefs = shuffle([...definitions]);
+
+            dynamicRoadmapContent.innerHTML = `
+                <div class="space-y-4 animate-fade-in">
+                    <button onclick="renderGlossaryHub()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline">
+                        <i class="fa-solid fa-arrow-left"></i> 사전 홈으로 돌아가기
+                    </button>
+
+                    <div class="bg-indigo-50 p-3 rounded-2xl text-[11px] text-indigo-950 font-semibold leading-relaxed">
+                        🎮 <strong>게임 방법</strong>: 왼쪽의 '용어'를 1개 누른 뒤, 오른쪽에서 알맞은 '설명'을 찾아 연속으로 매칭해 보세요! 성공하면 초록색으로 바뀝니다.
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <!-- 단어 열 -->
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-bold text-slate-400 block mb-1">용어 카드</span>
+                            ${shuffledWords.map(w => `
+                                <button id="match-word-${w.id}" onclick="clickMatchCard(${w.id}, 'word')" class="w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-bold border border-slate-100 rounded-xl transition duration-150">
+                                    ${w.text}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <!-- 뜻 열 -->
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-bold text-slate-400 block mb-1">설명 카드</span>
+                            ${shuffledDefs.map(d => `
+                                <button id="match-def-${d.id}" onclick="clickMatchCard(${d.id}, 'def')" class="w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-medium border border-slate-100 rounded-xl transition duration-150">
+                                    ${d.text}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <p id="gameSuccessMessage" class="hidden text-center text-green-600 font-bold text-xs animate-pulse">🎉 대단해요! 모든 용어를 맞추셨습니다!</p>
+
+                    <div class="pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="startWordMatchGame()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition mr-2">게임 재시작</button>
+                        <button onclick="renderGlossaryHub()" class="px-5 py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition">사전 허브로</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 카드 클릭 핸들러
+        function clickMatchCard(id, type) {
+            const wordBtn = document.getElementById(`match-word-${id}`);
+            const defBtn = document.getElementById(`match-def-${id}`);
+
+            if (type === 'word') {
+                // 이미 정답처리된 버튼은 무시
+                if (wordBtn.classList.contains('bg-green-100')) return;
+
+                // 기존 선택 초기화
+                if (selectedWordBtn) {
+                    const prevBtn = document.getElementById(`match-word-${selectedWordBtn}`);
+                    if (prevBtn) prevBtn.className = "w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-bold border border-slate-100 rounded-xl transition duration-150";
+                }
+
+                selectedWordBtn = id;
+                wordBtn.className = "w-full p-3 bg-indigo-100 text-indigo-700 font-bold border-2 border-indigo-500 rounded-xl text-left text-xs transition duration-150";
+            } else if (type === 'def') {
+                if (selectedWordBtn === null) {
+                    alert("먼저 왼쪽에서 용어 카드를 하나 선택해 주세요!");
+                    return;
+                }
+                if (defBtn.classList.contains('bg-green-100')) return;
+
+                const selectedWordEl = document.getElementById(`match-word-${selectedWordBtn}`);
+
+                if (selectedWordBtn === id) {
+                    // 정답!
+                    selectedWordEl.className = "w-full p-3 bg-green-100 text-green-800 font-bold border border-green-200 rounded-xl text-left text-xs";
+                    defBtn.className = "w-full p-3 bg-green-100 text-green-800 font-semibold border border-green-200 rounded-xl text-left text-xs";
+                    
+                    matchedCount++;
+                    selectedWordBtn = null;
+
+                    if (matchedCount === GLOSSARY_TERMS.length) {
+                        document.getElementById('gameSuccessMessage').classList.remove('hidden');
+                    }
+                } else {
+                    // 오답 피드백 후 단어 선택 리셋
+                    defBtn.className = "w-full p-3 bg-red-100 text-red-800 border border-red-200 rounded-xl text-left text-xs";
+                    setTimeout(() => {
+                        defBtn.className = "w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-medium border border-slate-100 rounded-xl transition duration-150";
+                    }, 800);
+                }
+            }
         }
     </script>
 </body>
