@@ -105,7 +105,6 @@
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <div class="relative mr-3 overflow-hidden rounded-xl">
-                    <!-- 로고 애니메이션 개선: duration-500 ease-out 속성을 가미하여 부드러운 회전 및 줌 효과 연출 -->
                     <img src="./images/logo.png" alt="Logo" class="h-10 w-auto transition-all duration-500 ease-out group-hover:rotate-[12deg] group-hover:scale-110" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
                 </div>
                 <div class="flex flex-col">
@@ -116,8 +115,9 @@
             
             <div class="hidden md:flex items-center space-x-10 text-sm font-semibold text-slate-600">
                 <a href="#about" class="hover:text-indigo-600 transition-colors">스토리</a>
+                <a href="#roadmap" class="hover:text-indigo-600 transition-colors">로드맵</a>
+                <a href="#mission" class="hover:text-indigo-600 transition-colors">영상미션</a>
                 <a href="#classes" class="hover:text-indigo-600 transition-colors">미술수업</a>
-                <a href="#club" class="hover:text-indigo-600 transition-colors">미디어동아리</a>
                 <a href="#youtube" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md hover:shadow-indigo-200">YouTube</a>
             </div>
             
@@ -157,11 +157,10 @@
                     <i class="fa-brands fa-youtube mr-3 text-red-500 text-xl"></i> 유튜브 채널 구독하기
                 </a>
                 <div class="flex w-full sm:w-auto gap-3">
-                    <a href="#about" class="btn-hover flex-1 bg-white text-slate-700 px-8 py-5 rounded-2xl font-bold border border-slate-200 shadow-sm hover:bg-slate-50 text-center">
-                        동아리 활동
+                    <a href="#mission" class="btn-hover flex-1 bg-white text-slate-700 px-8 py-5 rounded-2xl font-bold border border-slate-200 shadow-sm hover:bg-slate-50 text-center">
+                        미션제출하기
                     </a>
-                    <!-- 모달을 띄우는 버튼으로 교체 -->
-                    <button onclick="openModal()" class="btn-hover flex-1 bg-indigo-50 text-indigo-600 px-8 py-5 rounded-2xl font-bold hover:bg-indigo-100 transition-colors text-center flex items-center justify-center">
+                    <button onclick="openModal('general')" class="btn-hover flex-1 bg-indigo-50 text-indigo-600 px-8 py-5 rounded-2xl font-bold hover:bg-indigo-100 transition-colors text-center flex items-center justify-center">
                         질문하기 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
                     </button>
                 </div>
@@ -219,7 +218,201 @@
         </div>
     </section>
 
-    <!-- Interactive Grid -->
+    <!-- [신규 추가] 1. 레벨업 로드맵 섹션 -->
+    <section id="roadmap" class="py-24 bg-slate-50 border-t border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-full">Level-up Roadmap</span>
+                <h2 class="text-4xl font-bold text-slate-900 mt-4 mb-4">미디어 크리에이터 성장 로드맵</h2>
+                <p class="text-slate-500">기초부터 숏폼 영화제 출품까지, 순서대로 따라오며 레벨을 높여보세요!</p>
+            </div>
+
+            <!-- 카드 레이아웃 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- LV 1 Card -->
+                <div class="bg-white p-8 rounded-[2rem] border border-indigo-100/50 flex flex-col justify-between interactive-card reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -z-0 flex items-start justify-end p-4 transition-colors duration-300 group-hover:bg-indigo-600">
+                        <span class="text-xl font-bold text-indigo-600 group-hover:text-white transition-colors duration-300">LV 1</span>
+                    </div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">기초 단계</h3>
+                        <p class="text-slate-400 text-xs font-semibold mb-4 bg-slate-50 inline-block px-2.5 py-1 rounded-md">스마트폰 설정 & 구도</p>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">카메라 해상도 최적화 세팅법과 화면을 꽉 채우는 3분할 황금 구도를 학습합니다.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
+                        <button onclick="openStudy('lv1')" class="py-2.5 bg-indigo-50 text-indigo-600 font-bold text-xs rounded-xl hover:bg-indigo-100 transition">배우기</button>
+                        <button onclick="openQuiz('lv1')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
+                    </div>
+                </div>
+
+                <!-- LV 2 Card -->
+                <div class="bg-white p-8 rounded-[2rem] border border-sky-100/50 flex flex-col justify-between interactive-card reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-sky-50 rounded-bl-full -z-0 flex items-start justify-end p-4 transition-colors duration-300 group-hover:bg-sky-500">
+                        <span class="text-xl font-bold text-sky-500 group-hover:text-white transition-colors duration-300">LV 2</span>
+                    </div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <div class="w-12 h-12 bg-sky-50 text-sky-500 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-scissors text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">중급 단계</h3>
+                        <p class="text-slate-400 text-xs font-semibold mb-4 bg-slate-50 inline-block px-2.5 py-1 rounded-md">컷 편집 & BGM</p>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">불필요한 프레임을 도려내고, 영상의 분위기를 180도 바꾸는 배경음악 매칭을 배웁니다.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
+                        <button onclick="openStudy('lv2')" class="py-2.5 bg-sky-50 text-sky-600 font-bold text-xs rounded-xl hover:bg-sky-100 transition">배우기</button>
+                        <button onclick="openQuiz('lv2')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
+                    </div>
+                </div>
+
+                <!-- LV 3 Card -->
+                <div class="bg-white p-8 rounded-[2rem] border border-emerald-100/50 flex flex-col justify-between interactive-card reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-0 flex items-start justify-end p-4 transition-colors duration-300 group-hover:bg-emerald-500">
+                        <span class="text-xl font-bold text-emerald-500 group-hover:text-white transition-colors duration-300">LV 3</span>
+                    </div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">고급 단계</h3>
+                        <p class="text-slate-400 text-xs font-semibold mb-4 bg-slate-50 inline-block px-2.5 py-1 rounded-md">크로마키 & 특수효과</p>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">초록색 배경을 활용하여 시공간을 초월하는 합성 기술과 VFX 특수효과를 실습합니다.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
+                        <button onclick="openStudy('lv3')" class="py-2.5 bg-emerald-50 text-emerald-600 font-bold text-xs rounded-xl hover:bg-emerald-100 transition">배우기</button>
+                        <button onclick="openQuiz('lv3')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
+                    </div>
+                </div>
+
+                <!-- LV 4 Card -->
+                <div class="bg-white p-8 rounded-[2rem] border border-rose-100/50 flex flex-col justify-between interactive-card reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-rose-50 rounded-bl-full -z-0 flex items-start justify-end p-4 transition-colors duration-300 group-hover:bg-rose-500">
+                        <span class="text-xl font-bold text-rose-500 group-hover:text-white transition-colors duration-300">LV 4</span>
+                    </div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-clapperboard text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">실전 단계</h3>
+                        <p class="text-slate-400 text-xs font-semibold mb-4 bg-slate-50 inline-block px-2.5 py-1 rounded-md">숏폼 영화제 출품</p>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">기획, 연출, 출연, 촬영, 편집을 모두 담아 오션 숏폼 무비 어워즈에 정식 출품해 봅니다.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
+                        <button onclick="openStudy('lv4')" class="py-2.5 bg-rose-50 text-rose-600 font-bold text-xs rounded-xl hover:bg-rose-100 transition">배우기</button>
+                        <button onclick="openQuiz('lv4')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- [신규 추가] 2. 오늘의 영상 미션 섹션 (Mission Center) -->
+    <section id="mission" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 rounded-[3rem] p-8 md:p-16 text-white shadow-2xl relative overflow-hidden reveal">
+                <!-- 원형 데코레이션 -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center relative z-10">
+                    <!-- 미션 정보 및 체크리스트 -->
+                    <div>
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold mb-6 border border-indigo-500/30">
+                            <span class="animate-ping w-2 h-2 bg-rose-400 rounded-full"></span>
+                            <span>오늘의 도전 영상 미션</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">나의 일상 속<br><span class="text-indigo-400 serif-font">'움직임'</span> 숏폼으로 담기</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-8">
+                            스마트폰을 활용해 주변 사물이나 인물의 빠른 움직임을 촬영하고, 역동적인 컷 편집 기술을 가미한 15초 이내의 짧은 숏폼 비디오 미션입니다.
+                        </p>
+
+                        <!-- 미션 체크리스트 -->
+                        <div class="space-y-3 bg-white/5 p-6 rounded-2xl border border-white/10">
+                            <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2">미션 자가 체크리스트</h4>
+                            <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
+                                <input type="checkbox" id="chk1" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                                <span>가로 720p 혹은 세로 1080p 해상도 설정 확인</span>
+                            </label>
+                            <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
+                                <input type="checkbox" id="chk2" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                                <span>빠른 프레임 편집 시 싱크 및 싱크오프 확인</span>
+                            </label>
+                            <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
+                                <input type="checkbox" id="chk3" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                                <span>무료 라이선스 배경음악(BGM) 사용 유무</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 영상 제출하기 폼 (스프레드시트 전송용) -->
+                    <div class="bg-white text-slate-900 p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                        <h3 class="text-xl font-bold mb-6 text-indigo-950 flex items-center">
+                            <i class="fa-solid fa-paper-plane mr-2 text-indigo-600"></i> 미션 링크 제출처
+                        </h3>
+                        
+                        <!-- 폼 name 속성 준수 -->
+                        <form id="missionForm" class="space-y-4">
+                            <!-- 학년, 반, 번호, 이름 -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1">학년</label>
+                                    <select name="grade" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 text-xs">
+                                        <option value="">선택</option>
+                                        <option value="1">1학년</option>
+                                        <option value="2">2학년</option>
+                                        <option value="3">3학년</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1">반</label>
+                                    <input type="number" name="classRoom" required min="1" max="20" placeholder="예: 2" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1">번호</label>
+                                    <input type="number" name="number" required min="1" max="40" placeholder="예: 12" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1">이름</label>
+                                    <input type="text" name="name" required placeholder="홍길동" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 text-xs">
+                                </div>
+                            </div>
+
+                            <!-- 미션명 (자동 지정 혹은 선택) -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">미션명 / 구분</label>
+                                <input type="text" name="category" readonly value="[오늘의 영상 미션] 움직임 숏폼" class="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 text-xs font-semibold cursor-not-allowed focus:outline-none">
+                            </div>
+
+                            <!-- 유튜브 또는 드라이브 동영상 링크 -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">영상 링크 (유튜브/드라이브 등)</label>
+                                <input type="url" name="content" required placeholder="https://youtu.be/... 또는 공유 드라이브 링크" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 text-xs">
+                            </div>
+
+                            <!-- 미션 제출 경고 및 안내 메시지 -->
+                            <div id="missionStatusAlert" class="hidden p-3 rounded-xl text-xs font-semibold transition-all duration-300"></div>
+
+                            <!-- 전송 버튼 -->
+                            <button type="submit" id="missionSubmitBtn" class="w-full py-3 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition flex items-center justify-center space-x-2">
+                                <span>비디오 제출완료</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Grid (미술수업) -->
     <section id="classes" class="py-32 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6 text-center mb-20 reveal">
             <h2 class="text-4xl font-bold tracking-tight mb-4 text-slate-900">Art Class Programs</h2>
@@ -303,7 +496,6 @@
             <div class="flex flex-col md:flex-row justify-between items-start mb-20 gap-12">
                 <div class="max-w-xs">
                     <div class="flex items-center mb-6">
-                        <!-- 푸터 로고에도 트랜지션 효과 동등하게 적용 -->
                         <img src="./images/logo.png" alt="Logo" class="h-8 mr-3 transition-transform duration-500 ease-out hover:rotate-12 hover:scale-105" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
                         <span class="font-bold text-xl">Ocean Art</span>
                     </div>
@@ -324,8 +516,8 @@
                     <div>
                         <h5 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Inquiry</h5>
                         <ul class="space-y-4 text-sm font-medium text-slate-500">
-                            <li><a href="javascript:void(0)" onclick="openModal()" class="hover:text-indigo-600 transition">Email Me</a></li>
-                            <li><a href="javascript:void(0)" onclick="openModal()" class="hover:text-indigo-600 transition">미술실 방문예약</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModal('general')" class="hover:text-indigo-600 transition">Email Me</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModal('general')" class="hover:text-indigo-600 transition">미술실 방문예약</a></li>
                         </ul>
                     </div>
                 </div>
@@ -347,7 +539,7 @@
         </div>
     </footer>
 
-    <!-- ================= 상담하기 모달 창 (Modal) 추가 영역 ================= -->
+    <!-- ================= 상담하기 & 학습/퀴즈 모달 창 (Modal) 추가 영역 ================= -->
     <div id="consultationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <!-- 모달 컨테이너 카드 -->
         <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row transform scale-95 transition-transform duration-300 max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible">
@@ -358,8 +550,8 @@
                 <div class="absolute -bottom-10 -right-10 w-52 h-52 bg-white/10 rounded-full blur-2xl"></div>
 
                 <div class="relative z-10">
-                    <h3 class="text-2xl font-bold mb-4 tracking-tight">선생님께 질문하기</h3>
-                    <p class="text-indigo-100 text-sm leading-relaxed mb-8">
+                    <h3 class="text-2xl font-bold mb-4 tracking-tight" id="modalSidebarTitle">선생님께 질문하기</h3>
+                    <p class="text-indigo-100 text-sm leading-relaxed mb-8" id="modalSidebarDesc">
                         미술 수업 내용, 미디어 동아리 가입, 진로 상담 등 궁금한 점이 있다면 편하게 적어 남겨주세요.
                     </p>
 
@@ -385,81 +577,89 @@
                     <i class="fa-solid fa-feather text-lg"></i>
                 </div>
                 
-                <!-- 우측 상단 닫기 단추 (모바일 대응용) -->
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white md:hidden">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
 
-            <!-- 오른쪽 작성 폼 -->
-            <div class="w-full md:w-[60%] p-8 md:p-10 relative bg-white flex flex-col justify-between">
-                <!-- 우측 상단 닫기 단추 (데스크톱용) -->
+            <!-- 오른쪽 작성 폼 혹은 동적 콘텐츠 영역 -->
+            <div class="w-full md:w-[60%] p-8 md:p-10 relative bg-white flex flex-col justify-between" id="modalRightPanel">
+                <!-- 닫기 단추 -->
                 <button onclick="closeModal()" class="hidden md:block absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition">
                     <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
 
-                <form id="consultationForm" class="space-y-5">
-                    <!-- 학년 / 반 / 번호 / 이름 영역 (가로 정렬 분리) -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">학년</label>
-                            <select name="grade" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all">
-                                <option value="">선택</option>
-                                <option value="1">1학년</option>
-                                <option value="2">2학년</option>
-                                <option value="3">3학년</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">반</label>
-                            <input type="number" name="classRoom" required min="1" max="20" placeholder="예: 2" 
-                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">번호</label>
-                            <input type="number" name="number" required min="1" max="40" placeholder="예: 15" 
-                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">이름</label>
-                            <input type="text" name="name" required placeholder="홍길동" 
-                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
-                        </div>
-                    </div>
-
-                    <!-- 문의 구분 -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">문의 구분</label>
-                        <div class="relative">
-                            <select name="category" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all appearance-none cursor-pointer">
-                                <option value="기타 상담">기타 상담</option>
-                                <option value="수업 질문">수업 질문</option>
-                                <option value="동아리 문의">동아리 문의</option>
-                                <option value="진로 및 개인상담">진로 및 개인상담</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400 text-[10px]">
-                                <i class="fa-solid fa-chevron-down"></i>
+                <!-- 1) 기본 질문 폼 양식 -->
+                <div id="generalFormWrapper">
+                    <form id="consultationForm" class="space-y-5">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">학년</label>
+                                <select name="grade" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all">
+                                    <option value="">선택</option>
+                                    <option value="1">1학년</option>
+                                    <option value="2">2학년</option>
+                                    <option value="3">3학년</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">반</label>
+                                <input type="number" name="classRoom" required min="1" max="20" placeholder="예: 2" 
+                                       class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">번호</label>
+                                <input type="number" name="number" required min="1" max="40" placeholder="예: 15" 
+                                       class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">이름</label>
+                                <input type="text" name="name" required placeholder="홍길동" 
+                                       class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
                             </div>
                         </div>
-                    </div>
 
-                    <!-- 문의 내용 -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">내용</label>
-                        <textarea name="content" required rows="4" placeholder="궁금한 내용을 자유롭게 적어주세요." 
-                                  class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 resize-none transition-all"></textarea>
-                    </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">문의 구분</label>
+                            <div class="relative">
+                                <select name="category" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all appearance-none cursor-pointer">
+                                    <option value="기타 상담">기타 상담</option>
+                                    <option value="수업 질문">수업 질문</option>
+                                    <option value="동아리 문의">동아리 문의</option>
+                                    <option value="진로 및 개인상담">진로 및 개인상담</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400 text-[10px]">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- 상태 메시지 알림 영역 -->
-                    <div id="statusAlert" class="hidden p-3 rounded-lg text-xs font-medium transition-all duration-300"></div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">내용</label>
+                            <textarea name="content" required rows="4" placeholder="궁금한 내용을 자유롭게 적어주세요." 
+                                      class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 resize-none transition-all"></textarea>
+                        </div>
 
-                    <!-- 전송 버튼 -->
-                    <div>
-                        <button type="submit" id="submitBtn" class="w-full py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-md hover:bg-slate-800 transition-colors flex items-center justify-center space-x-2">
-                            <span>보내기</span>
-                        </button>
+                        <!-- 상태 메시지 알림 영역 -->
+                        <div id="statusAlert" class="hidden p-3 rounded-lg text-xs font-medium transition-all duration-300"></div>
+
+                        <div>
+                            <button type="submit" id="submitBtn" class="w-full py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-md hover:bg-slate-800 transition-colors flex items-center justify-center space-x-2">
+                                <span>보내기</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2) 인터랙티브 로드맵 학습/퀴즈 삽입 플레이스홀더 -->
+                <div id="roadmapContentWrapper" class="hidden flex-col justify-between h-full space-y-4">
+                    <div id="dynamicRoadmapContent" class="text-sm text-slate-600 leading-relaxed overflow-y-auto max-h-[50vh] pr-2">
+                        <!-- 콘텐츠가 동적으로 업데이트 됨 -->
                     </div>
-                </form>
+                    <div class="pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="closeModal()" class="px-5 py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition">완료 및 닫기</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -482,7 +682,7 @@
                 y: 0,
                 duration: 1.2,
                 ease: "power4.out",
-                delay: (index * 0.1) % 0.3 // 약간의 순차적 지연
+                delay: (index * 0.1) % 0.3
             });
         });
 
@@ -498,23 +698,40 @@
             }
         });
 
-        /* ================= 모달 작동 및 앱스 스크립트 연결 로직 ================= */
-        // 구글 앱스 스크립트 웹 앱 배포 완료 후 제공받은 URL을 여기에 입력하세요.
-        // (이전에 만든 Apps 스크립트는 변경 없이 그대로 사용하실 수 있습니다.)
+        /* ================= 앱스 스크립트 연결 로직 ================= */
         const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5_NM9vnbrBdA_4JbA5CiWoX3S-V-HBOmARbcugYhSp-p-Mcvs3myZhS5QgrDret5J/exec"; 
 
         const modal = document.getElementById('consultationModal');
         const modalContent = modal.querySelector('.transform');
+        
+        // 폼 참조 리스트
         const form = document.getElementById('consultationForm');
         const submitBtn = document.getElementById('submitBtn');
         const statusAlert = document.getElementById('statusAlert');
 
-        function openModal() {
+        const missionForm = document.getElementById('missionForm');
+        const missionSubmitBtn = document.getElementById('missionSubmitBtn');
+        const missionStatusAlert = document.getElementById('missionStatusAlert');
+
+        // 동적 모달 제어용 노드
+        const sidebarTitle = document.getElementById('modalSidebarTitle');
+        const sidebarDesc = document.getElementById('modalSidebarDesc');
+        const generalFormWrapper = document.getElementById('generalFormWrapper');
+        const roadmapContentWrapper = document.getElementById('roadmapContentWrapper');
+        const dynamicRoadmapContent = document.getElementById('dynamicRoadmapContent');
+
+        function openModal(mode) {
+            // 초기 설정 리셋
+            generalFormWrapper.classList.remove('hidden');
+            roadmapContentWrapper.classList.add('hidden');
+            sidebarTitle.innerText = "선생님께 질문하기";
+            sidebarDesc.innerText = "미술 수업 내용, 미디어 동아리 가입, 진로 상담 등 궁금한 점이 있다면 편하게 적어 남겨주세요.";
+
             modal.classList.remove('pointer-events-none');
             modal.classList.add('opacity-100');
             modalContent.classList.remove('scale-95');
             modalContent.classList.add('scale-100');
-            document.body.style.overflow = 'hidden'; // 부모 스크롤 잠금
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
@@ -522,42 +739,57 @@
             modal.classList.remove('opacity-100');
             modalContent.classList.remove('scale-100');
             modalContent.classList.add('scale-95');
-            document.body.style.overflow = ''; // 부모 스크롤 복구
+            document.body.style.overflow = '';
             
-            // 일정 시간이 지난 후 폼 상태 초기화
             setTimeout(() => {
                 form.reset();
                 hideStatus();
             }, 300);
         }
 
-        // 모달 외부 클릭 시 닫기 구현
+        // 모달 바깥쪽 여백 영역 선택 시 닫기
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
-        form.addEventListener('submit', async (e) => {
+        // 1. 일반 상담 폼 전송 액션
+        form.addEventListener('submit', (e) => handleFormSubmit(e, form, submitBtn, statusAlert));
+        
+        // 2. 오늘의 영상 미션 폼 전송 액션
+        missionForm.addEventListener('submit', (e) => handleFormSubmit(e, missionForm, missionSubmitBtn, missionStatusAlert));
+
+        // 통합 전송 기능 구현 (학년, 반, 번호, 이름, 카테고리, 내용 매핑)
+        async function handleFormSubmit(e, targetForm, targetButton, targetAlert) {
             e.preventDefault();
 
             if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes("YOUR_")) {
-                showStatus('구글 앱스 스크립트의 배포 URL을 기입해 주세요.', 'error');
+                showFieldStatus(targetAlert, '구글 앱스 스크립트 배포 URL이 설정되지 않았습니다.', 'error');
                 return;
             }
 
-            // 버튼 제출 불가 & 애니메이션 처리 시작
-            submitBtn.disabled = true;
-            submitBtn.classList.add('btn-loading');
-            hideStatus();
+            // 미션 폼의 경우 제출 시 체크리스트 유효성 추가 보완
+            if (targetForm.id === 'missionForm') {
+                const c1 = document.getElementById('chk1').checked;
+                const c2 = document.getElementById('chk2').checked;
+                const c3 = document.getElementById('chk3').checked;
+                if (!c1 || !c2 || !c3) {
+                    showFieldStatus(targetAlert, '미션 자가 체크리스트 3가지를 모두 확인하고 완료해 주세요!', 'error');
+                    return;
+                }
+            }
 
-            const formData = new FormData(form);
+            targetButton.disabled = true;
+            targetButton.classList.add('btn-loading');
+            hideFieldStatus(targetAlert);
+
+            const formData = new FormData(targetForm);
             const dataObj = {};
             formData.forEach((value, key) => {
                 dataObj[key] = value;
             });
 
-            // 지수 백오프 기반 데이터 전송 구성 (최대 5회)
             let success = false;
             let retries = 5;
             let delay = 1000;
@@ -571,7 +803,7 @@
 
                     await fetch(APP_SCRIPT_URL, {
                         method: 'POST',
-                        mode: 'no-cors', // Apps Script 호환성을 위해 no-cors 사용
+                        mode: 'no-cors',
                         body: searchParams,
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -587,37 +819,184 @@
                 }
             }
 
-            // 제출 대기 해제
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('btn-loading');
+            targetButton.disabled = false;
+            targetButton.classList.remove('btn-loading');
 
             if (success) {
-                showStatus('성공적으로 메시지가 전송되었습니다! 선생님이 확인 후 연락 드릴게요.', 'success');
-                form.reset();
-                
-                // 성공 시 2초 뒤 모달 자동 종료
-                setTimeout(() => {
-                    closeModal();
-                }, 2000);
+                showFieldStatus(targetAlert, '스프레드시트에 정상 등록되었습니다! 훌륭합니다.', 'success');
+                targetForm.reset();
+                if (targetForm.id === 'missionForm') {
+                    // 미션 체크리스트도 함께 리셋
+                    document.getElementById('chk1').checked = false;
+                    document.getElementById('chk2').checked = false;
+                    document.getElementById('chk3').checked = false;
+                } else {
+                    setTimeout(() => closeModal(), 2000);
+                }
             } else {
-                showStatus('메시지 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.', 'error');
+                showFieldStatus(targetAlert, '전송 중 문제가 생겼습니다. 네트워크 상태를 재확인하세요.', 'error');
             }
-        });
+        }
 
-        function showStatus(message, type) {
-            statusAlert.innerText = message;
-            statusAlert.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800');
+        // 특정 영역 얼럿 노출 도구
+        function showFieldStatus(alertElement, message, type) {
+            alertElement.innerText = message;
+            alertElement.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800', 'bg-green-100', 'text-green-950', 'bg-red-100');
             
             if (type === 'success') {
-                statusAlert.classList.add('bg-green-50', 'text-green-800');
+                alertElement.classList.add('bg-green-100', 'text-green-800');
             } else {
-                statusAlert.classList.add('bg-red-50', 'text-red-800');
+                alertElement.classList.add('bg-red-100', 'text-red-800');
             }
-            statusAlert.classList.remove('hidden');
+            alertElement.classList.remove('hidden');
+        }
+
+        function hideFieldStatus(alertElement) {
+            alertElement.classList.add('hidden');
         }
 
         function hideStatus() {
             statusAlert.classList.add('hidden');
+            missionStatusAlert.classList.add('hidden');
+        }
+
+        /* ================= 로드맵 인터랙티브 기능 설계 ================= */
+        const ROADMAP_DATA = {
+            lv1: {
+                title: "LV 1 스마트폰 설정 & 구도",
+                study: `
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-graduation-cap text-indigo-600 mr-2"></i>카메라 초기 환경설정 가이드</h4>
+                        <p class="text-xs">스마트폰으로 영화 같은 고화질 소스를 얻기 위해 다음 3가지를 먼저 세팅해 보세요.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-xs">
+                            <li><strong>해상도 설정:</strong> 동영상 카메라 환경설정에서 비디오 해상도를 <strong>FHD 1080p (60fps)</strong> 혹은 <strong>4K UHD</strong>로 상향조정 하세요.</li>
+                            <li><strong>안내선(격자) 활성화:</strong> 카메라 설정 내 '수평/수직 안내선(격자선)'을 켜서 화면의 3분할 교차점에 주요 피사체를 정렬시킵니다.</li>
+                            <li><strong>렌즈 클리닝:</strong> 촬영 직전 미세 섬유로 렌즈를 닦아내어 불필요한 번짐을 최소화하는 버릇을 들입니다.</li>
+                        </ul>
+                    </div>
+                `,
+                quiz: `
+                    <div class="space-y-4" id="quizContainer">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-circle-question text-indigo-600 mr-2"></i>LV 1 구도 초성 퀴즈</h4>
+                        <p class="text-xs">Q. 화면 내 구도를 잡을 때 수평과 수직을 각각 삼등분하여 교차점에 대상물을 매칭시키는 이 촬영 법칙의 이름은 무엇일까요? (힌트: 3ㅂㅎ 구도)</p>
+                        <input type="text" id="quizAnswer" placeholder="정답을 한글로 적어주세요." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs mb-3">
+                        <button onclick="checkAnswer('3분할', '정답입니다! 황금 비율의 기초를 완전히 터득하셨군요.')" class="w-full py-2.5 bg-slate-950 text-white font-bold text-xs rounded-xl">제출하기</button>
+                        <p id="quizFeedback" class="text-xs font-semibold mt-2 hidden"></p>
+                    </div>
+                `
+            },
+            lv2: {
+                title: "LV 2 컷 편집 & BGM",
+                study: `
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-graduation-cap text-indigo-600 mr-2"></i>영상 리듬을 살리는 컷 편집 노하우</h4>
+                        <p class="text-xs">중급 과정의 핵심은 불필요한 부분의 과감한 삭제와 소리의 연동입니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-xs">
+                            <li><strong>'아, 음, 어' 제거:</strong> 설명형 영상의 경우 단어가 시작하기 직전과 끝난 후의 무음 구간을 확대하여 밀도 있게 자릅니다.</li>
+                            <li><strong>비트 싱크 매칭:</strong> 배경 음악(BGM)의 드럼 비트나 드롭 포인트에 맞춰 클립 전환이 이루어질 때 영상의 몰입도가 압도적으로 늘어납니다.</li>
+                            <li><strong>페이드 인/아웃:</strong> 영상 시작과 끝부분의 오디오가 급작스레 끊기지 않도록 0.5~1초 페이드 트랜지션을 반드시 부여하세요.</li>
+                        </ul>
+                    </div>
+                `,
+                quiz: `
+                    <div class="space-y-4" id="quizContainer">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-circle-question text-indigo-600 mr-2"></i>LV 2 사운드 제어 퀴즈</h4>
+                        <p class="text-xs">Q. 비디오 클립이 시작되거나 끝날 때 소리가 자연스럽게 점점 커지거나 점점 작아지도록 연출하는 이 사운드 기법은 무엇일까요?</p>
+                        <input type="text" id="quizAnswer" placeholder="정답을 입력하세요 (예: 페이드인 페이드아웃)" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs mb-3">
+                        <button onclick="checkAnswer('페이드', '정답입니다! 전환과 볼륨 페이드를 통해 한결 고급스러운 사운드믹싱이 가능해집니다.')" class="w-full py-2.5 bg-slate-950 text-white font-bold text-xs rounded-xl">제출하기</button>
+                        <p id="quizFeedback" class="text-xs font-semibold mt-2 hidden"></p>
+                    </div>
+                `
+            },
+            lv3: {
+                title: "LV 3 크로마키 & 특수효과",
+                study: `
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-graduation-cap text-indigo-600 mr-2"></i>그린스크린 합성의 세 가지 공식</h4>
+                        <p class="text-xs">크로마키 촬영 시 흔히 발생하는 테두리 연화 문제와 이질감을 줄이기 위한 방법입니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-xs">
+                            <li><strong>그린스크린과의 거리 유지:</strong> 인물과 배경 스크린이 너무 밀착되면 녹색 반사광이 옷이나 얼굴에 묻어나 합성이 깨집니다. 최하 1m 이상 이격시켜 주세요.</li>
+                            <li><strong>고른 조명 세팅:</strong> 그린스크린에 그림자가 지면 어두워진 영역의 합성이 원활히 이뤄지지 않으므로, 배경용 조명을 균일하게 퍼뜨려주어야 합니다.</li>
+                            <li><strong>키어(Keyer) 정밀 세팅:</strong> 프리미어의 Ultra Key 혹은 CapCut의 크로마키 강도를 섬세하게 튜닝해 테두리의 노이즈를 제거합니다.</li>
+                        </ul>
+                    </div>
+                `,
+                quiz: `
+                    <div class="space-y-4" id="quizContainer">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-circle-question text-emerald-600 mr-2"></i>LV 3 합성 기초 상식</h4>
+                        <p class="text-xs">Q. 크로마키 합성 스크린으로 파란색이나 '이 색상'이 대표적으로 사용됩니다. 식물의 잎이나 새싹에서 흔히 볼 수 있는 이 컬러는 무엇일까요?</p>
+                        <input type="text" id="quizAnswer" placeholder="초록색 혹은 녹색" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs mb-3">
+                        <button onclick="checkAnswer('초록', '정답입니다! 인물의 보편적인 피부톤(빨간색 영역)과 보색 관계에 있는 녹색 스크린이 가장 많이 활성화됩니다.')" class="w-full py-2.5 bg-slate-950 text-white font-bold text-xs rounded-xl">제출하기</button>
+                        <p id="quizFeedback" class="text-xs font-semibold mt-2 hidden"></p>
+                    </div>
+                `
+            },
+            lv4: {
+                title: "LV 4 숏폼 영화제 출품",
+                study: `
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-graduation-cap text-indigo-600 mr-2"></i>정식 숏폼 무비 어워드 출품 규격</h4>
+                        <p class="text-xs">우리의 꿈을 큰 화면에서 선보이기 위한 최종 점검 체크리스트입니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-xs">
+                            <li><strong>화면 비율 확인:</strong> 세로 규격 숏폼은 9:16 비율, 정식 시네마 규격은 16:9 비율을 유지해야 잘려나가는 영역이 없습니다.</li>
+                            <li><strong>자막 배치 범위:</strong> 하단 플랫폼 UI(댓글, 하트창 등)에 자막이 가려지지 않도록 화면 상단부나 중앙 하단 적정 위치에 안전 영역을 잡아 배치하세요.</li>
+                            <li><strong>엔딩 크레딧:</strong> 함께 노력한 팀원들의 역할(기획, 연출, 소리, 연기자 등)과 무료 제공 BGM 라이선스 출처를 명시하여 영화의 품격을 넓히세요.</li>
+                        </ul>
+                    </div>
+                `,
+                quiz: `
+                    <div class="space-y-4" id="quizContainer">
+                        <h4 class="font-bold text-indigo-950 text-base"><i class="fa-solid fa-circle-question text-rose-600 mr-2"></i>LV 4 숏폼 종횡비 상식 퀴즈</h4>
+                        <p class="text-xs">Q. 릴스나 쇼츠, 틱톡과 같은 글로벌 숏폼 플랫폼의 표준 세로 가로 세 비율(종횡비)은 몇 대 몇일까요? (정답 예시: 9:16)</p>
+                        <input type="text" id="quizAnswer" placeholder="정답을 적어주세요." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs mb-3">
+                        <button onclick="checkAnswer('9:16', '정답입니다! 세로 화면의 시각적인 꽉 찬 집중도를 극대화할 수 있는 9대16 규격이 글로벌 표준입니다.')" class="w-full py-2.5 bg-slate-950 text-white font-bold text-xs rounded-xl">제출하기</button>
+                        <p id="quizFeedback" class="text-xs font-semibold mt-2 hidden"></p>
+                    </div>
+                `
+            }
+        };
+
+        function openStudy(levelKey) {
+            const data = ROADMAP_DATA[levelKey];
+            if (!data) return;
+
+            openModal('roadmap');
+            generalFormWrapper.classList.add('hidden');
+            roadmapContentWrapper.classList.remove('hidden');
+
+            sidebarTitle.innerText = "Level-up 배우기";
+            sidebarDesc.innerText = `${data.title}의 미디어 지식 핵심 노하우를 습득하고 퀴즈에 도전해 성장 포인트를 얻으세요.`;
+            dynamicRoadmapContent.innerHTML = data.study;
+        }
+
+        function openQuiz(levelKey) {
+            const data = ROADMAP_DATA[levelKey];
+            if (!data) return;
+
+            openModal('roadmap');
+            generalFormWrapper.classList.add('hidden');
+            roadmapContentWrapper.classList.remove('hidden');
+
+            sidebarTitle.innerText = "Level-up 퀴즈!";
+            sidebarDesc.innerText = `${data.title}의 지식을 테스트하는 초급/중급/고급 상식 퀴즈입니다.`;
+            dynamicRoadmapContent.innerHTML = data.quiz;
+        }
+
+        // 퀴즈 채점 기능 (유저 키워드 매칭)
+        function checkAnswer(keyword, successMsg) {
+            const userAns = document.getElementById('quizAnswer').value.trim();
+            const feedback = document.getElementById('quizFeedback');
+            
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-500');
+            
+            if (userAns.toLowerCase().includes(keyword.toLowerCase())) {
+                feedback.innerText = successMsg;
+                feedback.classList.add('text-green-600');
+            } else {
+                feedback.innerText = "틀렸습니다! 조금만 더 신중하게 고민하고 정답을 제출해 보세요.";
+                feedback.classList.add('text-red-500');
+            }
+            feedback.classList.remove('hidden');
         }
     </script>
 </body>
