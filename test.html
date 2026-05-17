@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Art Studio | 오션중학교</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&family=Fraunces:ital,opsz,wght@1,9..144,700&display=swap');
+        
+        :root {
+            --primary: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #f43f5e;
+            --bg-light: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: var(--bg-light);
+        }
+        
+        .serif-font { font-family: 'Fraunces', serif; font-style: italic; }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .interactive-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #e0e7ff 0%, transparent 40%),
+                        radial-gradient(circle at bottom left, #f0f9ff 0%, transparent 40%);
+        }
+
+        /* 버튼 애니메이션 */
+        .btn-hover {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%) rotate(45deg) scale(0);
+        }
+
+        .btn-hover:hover::after {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1);
+        }
+
+        /* 스크롤 애니메이션 타겟 */
+        .reveal { opacity: 0; transform: translateY(30px); }
+
+        /* 로딩 스피너 애니메이션 */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spinner 0.8s linear infinite;
+        }
+        @keyframes spinner {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 glass-nav border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative mr-3 overflow-hidden rounded-xl">
+                    <!-- 로고 애니메이션 개선: duration-500 ease-out 속성을 가미하여 부드러운 회전 및 줌 효과 연출 -->
+                    <img src="./images/logo.png" alt="Logo" class="h-10 w-auto transition-all duration-500 ease-out group-hover:rotate-[12deg] group-hover:scale-110" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight text-slate-800">오션 동영상 컨텐츠 제작하기</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-indigo-500 font-bold">Art & Media Lab</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-10 text-sm font-semibold text-slate-600">
+                <a href="#about" class="hover:text-indigo-600 transition-colors">스토리</a>
+                <a href="#classes" class="hover:text-indigo-600 transition-colors">미술수업</a>
+                <a href="#club" class="hover:text-indigo-600 transition-colors">미디어동아리</a>
+                <a href="#youtube" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md hover:shadow-indigo-200">YouTube</a>
+            </div>
+            
+            <button class="md:hidden text-slate-800"><i class="fa-solid fa-bars-staggered text-2xl"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative hero-gradient px-6 overflow-hidden">
+        <!-- Floating Elements Animation Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-1/4 left-10 w-64 h-64 bg-indigo-200/30 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-sky-200/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+
+        <div class="max-w-5xl text-center z-10 pt-20">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/50 border border-indigo-100 text-indigo-600 text-xs font-bold mb-8 shadow-sm reveal">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                <span>오션중학교 크리에이티브 스튜디오</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-8 reveal">
+                Art is <span class="serif-font text-indigo-600">Everywhere</span>,<br>
+                Media is <span class="serif-font text-sky-500">Everything</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12 reveal">
+                오션중학교 미술실에서 시작되는 특별한 변화.<br>
+                캔버스를 넘어 디지털 프레임 속으로 아이들의 꿈을 확장합니다.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 reveal">
+                <a href="#youtube" class="btn-hover w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold flex items-center justify-center shadow-2xl">
+                    <i class="fa-brands fa-youtube mr-3 text-red-500 text-xl"></i> 유튜브 채널 구독하기
+                </a>
+                <div class="flex w-full sm:w-auto gap-3">
+                    <a href="#about" class="btn-hover flex-1 bg-white text-slate-700 px-8 py-5 rounded-2xl font-bold border border-slate-200 shadow-sm hover:bg-slate-50 text-center">
+                        동아리 활동
+                    </a>
+                    <!-- 모달을 띄우는 버튼으로 교체 -->
+                    <button onclick="openModal()" class="btn-hover flex-1 bg-indigo-50 text-indigo-600 px-8 py-5 rounded-2xl font-bold hover:bg-indigo-100 transition-colors text-center flex items-center justify-center">
+                        질문하기 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats/Intro -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <div class="relative">
+                        <div class="aspect-[4/5] bg-slate-100 rounded-[2.5rem] overflow-hidden group">
+                             <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" alt="Art class" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                             <div class="absolute inset-0 bg-indigo-900/10 group-hover:bg-transparent transition-colors"></div>
+                        </div>
+                        <div class="absolute -bottom-10 -right-10 bg-white p-8 rounded-3xl shadow-2xl border border-slate-50 hidden lg:block">
+                            <div class="flex items-center space-x-4 mb-2">
+                                <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-bold text-slate-900 tracking-tight">Enjoy Art</p>
+                                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Student Satisfaction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h2 class="text-sm font-bold text-indigo-600 tracking-[0.3em] uppercase mb-4">Our Story</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-8">
+                        함께 배우고,<br>함께 찍고, <span class="text-indigo-600 italic">함께 성장하기</span>
+                    </h3>
+                    <p class="text-slate-500 text-lg leading-relaxed mb-8">
+                        오션중학교 미술 선생님이자, 이제 막 걸음마를 뗀 초보 유튜버입니다. 완벽함보다는 '과정의 즐거움'을 아이들과 나누고 싶습니다.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 interactive-card">
+                            <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-indigo-600 mr-4">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <span class="font-bold text-slate-700">창의적인 시각적 사고 훈련</span>
+                        </div>
+                        <div class="flex items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 interactive-card">
+                            <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-500 mr-4">
+                                <i class="fa-solid fa-camera-retro"></i>
+                            </div>
+                            <span class="font-bold text-slate-700">미디어를 통한 자기표현의 확장</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Grid -->
+    <section id="classes" class="py-32 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6 text-center mb-20 reveal">
+            <h2 class="text-4xl font-bold tracking-tight mb-4 text-slate-900">Art Class Programs</h2>
+            <p class="text-slate-400 font-medium">오션중학교 미술실의 세 가지 즐거움</p>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white p-10 rounded-[2rem] border border-slate-100 interactive-card reveal group">
+                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-2xl mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-500">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">순수 미술</h4>
+                <p class="text-slate-500 leading-relaxed text-sm">손끝으로 느끼는 질감과 색채. 전통적인 미술 도구를 통해 기본기를 탄탄하게 다집니다.</p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="bg-white p-10 rounded-[2rem] border border-slate-100 interactive-card reveal group" style="transition-delay: 0.1s;">
+                <div class="w-16 h-16 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-600 text-2xl mb-8 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-500">
+                    <i class="fa-solid fa-bezier-curve"></i>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">디지털 디자인</h4>
+                <p class="text-slate-500 leading-relaxed text-sm">태블릿과 다양한 툴을 활용하여 현대적인 시각 언어를 배우고 소통하는 방법을 익힙니다.</p>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="bg-white p-10 rounded-[2rem] border border-slate-100 interactive-card reveal group" style="transition-delay: 0.2s;">
+                <div class="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600 text-2xl mb-8 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-500">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">미디어 융합</h4>
+                <p class="text-slate-500 leading-relaxed text-sm">정적인 이미지에 시간과 소리를 더해 생명력을 불어넣는 창의적인 영상 실험을 진행합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube & Media Section -->
+    <section id="youtube" class="py-32 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 right-0 p-20 opacity-10">
+            <i class="fa-brands fa-youtube text-[300px]"></i>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="reveal">
+                <div class="inline-block px-4 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-bold mb-6 border border-red-500/30">
+                    NOW ON YOUTUBE
+                </div>
+                <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-8">
+                    초보 유튜버의<br><span class="text-red-500">리얼 성장기</span>
+                </h2>
+                <p class="text-slate-400 text-lg mb-12 max-w-md leading-relaxed">
+                    선생님도 매일 배웁니다. 컷 편집부터 자막 작업까지, 학생들과 똑같은 고민을 하며 채널을 키워가는 중이에요. 함께 도전해요!
+                </p>
+                <div class="flex items-center space-x-12">
+                    <div>
+                        <p class="text-3xl font-bold">1.2K</p>
+                        <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">Subscribers</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-bold">45+</p>
+                        <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">Total Videos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reveal">
+                <div class="relative group cursor-pointer">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-indigo-600 rounded-[2rem] blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative aspect-video bg-black rounded-[2rem] overflow-hidden shadow-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-play text-7xl text-white/50 group-hover:text-red-500 transition-colors duration-300"></i>
+                        <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&q=80&w=800" alt="Video" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-white border-t border-slate-100 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-20 gap-12">
+                <div class="max-w-xs">
+                    <div class="flex items-center mb-6">
+                        <!-- 푸터 로고에도 트랜지션 효과 동등하게 적용 -->
+                        <img src="./images/logo.png" alt="Logo" class="h-8 mr-3 transition-transform duration-500 ease-out hover:rotate-12 hover:scale-105" onerror="this.src='https://ui-avatars.com/api/?name=O&background=4f46e5&color=fff'">
+                        <span class="font-bold text-xl">Ocean Art</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        부산 오션중학교 미술 교과와 동영상 동아리 활동을 위한 통합 포트폴리오 사이트입니다.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-20">
+                    <div>
+                        <h5 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Connect</h5>
+                        <ul class="space-y-4 text-sm font-medium text-slate-500">
+                            <li><a href="#" class="hover:text-indigo-600 transition">Instagram</a></li>
+                            <li><a href="#" class="hover:text-red-600 transition">YouTube</a></li>
+                            <li><a href="#" class="hover:text-indigo-600 transition">Naver Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Inquiry</h5>
+                        <ul class="space-y-4 text-sm font-medium text-slate-500">
+                            <li><a href="javascript:void(0)" onclick="openModal()" class="hover:text-indigo-600 transition">Email Me</a></li>
+                            <li><a href="javascript:void(0)" onclick="openModal()" class="hover:text-indigo-600 transition">미술실 방문예약</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-slate-50 gap-6">
+                <p class="text-slate-400 text-[10px] font-medium tracking-widest uppercase">
+                    &copy; 2024 Ocean Middle School. Design for Teacher.
+                </p>
+                <div class="flex space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 transition cursor-pointer border border-slate-100">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-red-600 transition cursor-pointer border border-slate-100">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= 상담하기 모달 창 (Modal) 추가 영역 ================= -->
+    <div id="consultationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- 모달 컨테이너 카드 -->
+        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row transform scale-95 transition-transform duration-300 max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible">
+            
+            <!-- 왼쪽 정보 사이드바 -->
+            <div class="w-full md:w-[40%] bg-indigo-600 text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-white/5 rounded-full blur-xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-52 h-52 bg-white/10 rounded-full blur-2xl"></div>
+
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-bold mb-4 tracking-tight">선생님께 질문하기</h3>
+                    <p class="text-indigo-100 text-sm leading-relaxed mb-8">
+                        미술 수업 내용, 미디어 동아리 가입, 진로 상담 등 궁금한 점이 있다면 편하게 적어 남겨주세요.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium">오션중학교 미술실</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                                <i class="fa-regular fa-clock text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium">쉬는시간, 점심시간 방문 환영</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 md:mt-0 flex items-center space-x-4 opacity-30">
+                    <i class="fa-brands fa-html5 text-2xl"></i>
+                    <i class="fa-brands fa-google text-xl"></i>
+                    <i class="fa-solid fa-feather text-lg"></i>
+                </div>
+                
+                <!-- 우측 상단 닫기 단추 (모바일 대응용) -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white md:hidden">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- 오른쪽 작성 폼 -->
+            <div class="w-full md:w-[60%] p-8 md:p-10 relative bg-white flex flex-col justify-between">
+                <!-- 우측 상단 닫기 단추 (데스크톱용) -->
+                <button onclick="closeModal()" class="hidden md:block absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+
+                <form id="consultationForm" class="space-y-5">
+                    <!-- 학년 / 반 / 번호 / 이름 영역 (가로 정렬 분리) -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">학년</label>
+                            <select name="grade" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all">
+                                <option value="">선택</option>
+                                <option value="1">1학년</option>
+                                <option value="2">2학년</option>
+                                <option value="3">3학년</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">반</label>
+                            <input type="number" name="classRoom" required min="1" max="20" placeholder="예: 2" 
+                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">번호</label>
+                            <input type="number" name="number" required min="1" max="40" placeholder="예: 15" 
+                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">이름</label>
+                            <input type="text" name="name" required placeholder="홍길동" 
+                                   class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 transition-all">
+                        </div>
+                    </div>
+
+                    <!-- 문의 구분 -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">문의 구분</label>
+                        <div class="relative">
+                            <select name="category" required class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs transition-all appearance-none cursor-pointer">
+                                <option value="기타 상담">기타 상담</option>
+                                <option value="수업 질문">수업 질문</option>
+                                <option value="동아리 문의">동아리 문의</option>
+                                <option value="진로 및 개인상담">진로 및 개인상담</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400 text-[10px]">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 문의 내용 -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 pl-1">내용</label>
+                        <textarea name="content" required rows="4" placeholder="궁금한 내용을 자유롭게 적어주세요." 
+                                  class="w-full px-3 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 text-xs placeholder-slate-400 resize-none transition-all"></textarea>
+                    </div>
+
+                    <!-- 상태 메시지 알림 영역 -->
+                    <div id="statusAlert" class="hidden p-3 rounded-lg text-xs font-medium transition-all duration-300"></div>
+
+                    <!-- 전송 버튼 -->
+                    <div>
+                        <button type="submit" id="submitBtn" class="w-full py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-md hover:bg-slate-800 transition-colors flex items-center justify-center space-x-2">
+                            <span>보내기</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GSAP 스크롤 애니메이션 설정
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 요소 서서히 나타나기 애니메이션
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        revealElements.forEach((el, index) => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power4.out",
+                delay: (index * 0.1) % 0.3 // 약간의 순차적 지연
+            });
+        });
+
+        // 네비게이션 배경 스크롤 효과
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'shadow-sm');
+                nav.classList.remove('py-3');
+            } else {
+                nav.classList.remove('py-2', 'shadow-sm');
+                nav.classList.add('py-3');
+            }
+        });
+
+        /* ================= 모달 작동 및 앱스 스크립트 연결 로직 ================= */
+        // 구글 앱스 스크립트 웹 앱 배포 완료 후 제공받은 URL을 여기에 입력하세요.
+        // (이전에 만든 Apps 스크립트는 변경 없이 그대로 사용하실 수 있습니다.)
+        const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5_NM9vnbrBdA_4JbA5CiWoX3S-V-HBOmARbcugYhSp-p-Mcvs3myZhS5QgrDret5J/exec"; 
+
+        const modal = document.getElementById('consultationModal');
+        const modalContent = modal.querySelector('.transform');
+        const form = document.getElementById('consultationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusAlert = document.getElementById('statusAlert');
+
+        function openModal() {
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden'; // 부모 스크롤 잠금
+        }
+
+        function closeModal() {
+            modal.classList.add('pointer-events-none');
+            modal.classList.remove('opacity-100');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            document.body.style.overflow = ''; // 부모 스크롤 복구
+            
+            // 일정 시간이 지난 후 폼 상태 초기화
+            setTimeout(() => {
+                form.reset();
+                hideStatus();
+            }, 300);
+        }
+
+        // 모달 외부 클릭 시 닫기 구현
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes("YOUR_")) {
+                showStatus('구글 앱스 스크립트의 배포 URL을 기입해 주세요.', 'error');
+                return;
+            }
+
+            // 버튼 제출 불가 & 애니메이션 처리 시작
+            submitBtn.disabled = true;
+            submitBtn.classList.add('btn-loading');
+            hideStatus();
+
+            const formData = new FormData(form);
+            const dataObj = {};
+            formData.forEach((value, key) => {
+                dataObj[key] = value;
+            });
+
+            // 지수 백오프 기반 데이터 전송 구성 (최대 5회)
+            let success = false;
+            let retries = 5;
+            let delay = 1000;
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const searchParams = new URLSearchParams();
+                    for (const [key, value] of Object.entries(dataObj)) {
+                        searchParams.append(key, value);
+                    }
+
+                    await fetch(APP_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors', // Apps Script 호환성을 위해 no-cors 사용
+                        body: searchParams,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+
+                    success = true;
+                    break;
+                } catch (error) {
+                    if (i === retries - 1) break;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; 
+                }
+            }
+
+            // 제출 대기 해제
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-loading');
+
+            if (success) {
+                showStatus('성공적으로 메시지가 전송되었습니다! 선생님이 확인 후 연락 드릴게요.', 'success');
+                form.reset();
+                
+                // 성공 시 2초 뒤 모달 자동 종료
+                setTimeout(() => {
+                    closeModal();
+                }, 2000);
+            } else {
+                showStatus('메시지 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.', 'error');
+            }
+        });
+
+        function showStatus(message, type) {
+            statusAlert.innerText = message;
+            statusAlert.classList.remove('hidden', 'bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800');
+            
+            if (type === 'success') {
+                statusAlert.classList.add('bg-green-50', 'text-green-800');
+            } else {
+                statusAlert.classList.add('bg-red-50', 'text-red-800');
+            }
+            statusAlert.classList.remove('hidden');
+        }
+
+        function hideStatus() {
+            statusAlert.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
