@@ -107,7 +107,7 @@
             <span class="text-slate-300 font-medium">선생님 전용 제어반</span>
         </div>
         <div>
-            <!-- 보안 강화: 비번 힌트 일절 미표기 -->
+            <!-- 보안 가이드 준수: 비밀번호 힌트 노출 금지 -->
             <button id="adminAccessBtn" onclick="toggleAdminPanel()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white px-3 py-1 rounded-md transition font-semibold">
                 <i class="fa-solid fa-user-gear mr-1"></i> 관리자 대시보드 열기
             </button>
@@ -137,7 +137,15 @@
                 <a href="#youtube" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md hover:shadow-indigo-200">YouTube</a>
             </div>
             
-            <button class="md:hidden text-slate-800"><i class="fa-solid fa-bars-staggered text-2xl"></i></button>
+            <button class="text-slate-800 md:hidden" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars-staggered text-2xl"></i></button>
+        </div>
+        <!-- 모바일 서브메뉴 구성 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-6 py-4 space-y-3 font-semibold text-slate-700 text-sm">
+            <a href="#about" onclick="toggleMobileMenu()" class="block hover:text-indigo-600">스토리</a>
+            <a href="#roadmap" onclick="toggleMobileMenu()" class="block hover:text-indigo-600">로드맵</a>
+            <a href="javascript:void(0)" onclick="openGlossary(); toggleMobileMenu();" class="block text-indigo-600 hover:text-indigo-800">용어사전</a>
+            <a href="#mission" onclick="toggleMobileMenu()" class="block hover:text-indigo-600">영상미션</a>
+            <a href="#classes" onclick="toggleMobileMenu()" class="block hover:text-indigo-600">미술수업</a>
         </div>
     </nav>
 
@@ -157,12 +165,14 @@
                 <span>오션중학교 크리에이티브 스튜디오</span>
             </div>
             
-            <h1 class="text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-8 reveal">
+            <!-- 관리자 모드에서 수정 가능하도록 ID(mainTitle) 부여 -->
+            <h1 id="mainTitle" class="text-6xl md:text-8xl font-bold tracking-tighter text-slate-900 mb-8 reveal">
                 Art is <span class="serif-font text-indigo-600">Everywhere</span>,<br>
                 Media is <span class="serif-font text-sky-500">Everything</span>
             </h1>
             
-            <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12 reveal">
+            <!-- 관리자 모드에서 수정 가능하도록 ID(mainSubtitle) 부여 -->
+            <p id="mainSubtitle" class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12 reveal">
                 오션중학교 미술실에서 시작되는 특별한 변화.<br>
                 캔버스를 넘어 디지털 프레임 속으로 아이들의 꿈을 확장합니다.
             </p>
@@ -350,7 +360,6 @@
                         <i class="fa-solid fa-lock mr-1.5"></i> 미션 5: 숏폼 영화 출품작 제출
                     </button>
                 </div>
-                <!-- 보안 정책: 비밀번호는 여기서 노출되지 않도록 전면 마스킹 처리 -->
                 <p class="text-[11px] text-slate-400 mt-3 font-semibold"><i class="fa-solid fa-circle-info mr-1"></i>잠금 해제는 최상단의 관리자 대시보드에서 선생님이 직접 활성화할 수 있습니다.</p>
             </div>
 
@@ -462,7 +471,7 @@
     <section id="classes" class="py-32 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6 text-center mb-20 reveal">
             <h2 class="text-4xl font-bold tracking-tight mb-4 text-slate-900">Art Class Programs</h2>
-            <p class="text-slate-400 font-medium">오션중학교 미술실의 세 가지 즐거움</p>
+            <p class="text-slate-400 font-medium text-slate-500" id="mislsuupAnnounce">오션중학교 미술실의 세 가지 즐거움</p>
         </div>
         
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
@@ -603,13 +612,15 @@
                             <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                                 <i class="fa-solid fa-location-dot text-xs"></i>
                             </div>
-                            <span class="text-sm font-medium">오션중학교 미술실</span>
+                            <!-- 관리자 모드에서 실시간 수정 가능하도록 ID 부여 -->
+                            <span class="text-sm font-medium" id="sidebarLocName">오션중학교 미술실</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                                 <i class="fa-regular fa-clock text-xs"></i>
                             </div>
-                            <span class="text-sm font-medium">쉬는시간, 점심시간 방문 환영</span>
+                            <!-- 관리자 모드에서 실시간 수정 가능하도록 ID 부여 -->
+                            <span class="text-sm font-medium" id="sidebarLocTime">쉬는시간, 점심시간 방문 환영</span>
                         </div>
                     </div>
                 </div>
@@ -747,6 +758,9 @@
                         <button onclick="switchAdminSubTab('missions')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2" id="adminTabBtn-missions">
                             <i class="fa-solid fa-list-check"></i> 미션 활성화 관리
                         </button>
+                        <button onclick="switchAdminSubTab('contents')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2" id="adminTabBtn-contents">
+                            <i class="fa-solid fa-pen-to-square"></i> 메인화면 내용 편집
+                        </button>
                         <button onclick="switchAdminSubTab('submissions')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-700 transition flex items-center gap-2" id="adminTabBtn-submissions">
                             <i class="fa-solid fa-chart-line"></i> 연동 모니터링
                         </button>
@@ -773,8 +787,59 @@
                     </div>
                 </div>
 
-                <!-- 2. 연동 점검 모니터링 탭 -->
+                <!-- [신규 추가] 2. 메인화면 내용 편집 탭 -->
+                <div id="adminPanel-contents" class="space-y-4 hidden animate-fade-in">
+                    <p class="text-xs text-slate-500">선생님께서 원하시는 내용으로 홈페이지 본문 텍스트를 실시간 수정할 수 있습니다.</p>
+                    <div class="space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2 pl-1">메인 헤더 대제목 (HTML 지원)</label>
+                            <input type="text" id="editMainTitle" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <span class="text-[10px] text-slate-400 mt-1 block pl-1">예: Art is &lt;span class="serif-font text-indigo-600"&gt;Everywhere&lt;/span&gt;</span>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2 pl-1">메인 서브 슬로건 본문 (HTML 지원)</label>
+                            <textarea id="editMainSubtitle" rows="3" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-2 pl-1">미술실 교실 위치 정보</label>
+                                <input type="text" id="editLocName" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-2 pl-1">교실 방문 가능 시간</label>
+                                <input type="text" id="editLocTime" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2 pl-1">미술수업 섹션 안내글</label>
+                            <input type="text" id="editMislsuup" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="pt-2">
+                            <button onclick="applyHomepageContents()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-floppy-disk"></i> 편집 내용 홈페이지에 실시간 적용하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 연동 점검 모니터링 탭 -->
                 <div id="adminPanel-submissions" class="space-y-4 hidden">
+                    <!-- [신규 기능 추가] 미션 제출한 구글시트 게시판 링크 버튼 -->
+                    <div class="bg-indigo-600 text-white p-6 rounded-3xl shadow-lg flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="text-left">
+                            <h5 class="text-sm font-bold flex items-center gap-1.5"><i class="fa-solid fa-table-list"></i> 학생들의 실시간 제출 결과판</h5>
+                            <p class="text-[11px] text-indigo-100 mt-1 leading-relaxed">
+                                학생들이 제출한 모든 학년/반/번호/이름 및 비디오 공유 링크는 아래 구글 시트에 즉각적이고 안전하게 누적됩니다.
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <!-- 선생님 시트 이동 링크 (필요 시 선생님의 실제 스프레드시트 보기 전용/편집 링크 주소로 교체 가능) -->
+                            <a href="https://docs.google.com/spreadsheets/d/14LqA_1e8YZHh-DbFdm_VoAp5-ScHc2jG92UkkXyyXkI/edit?gid=0#gid=0" target="_blank" class="px-5 py-3 bg-white text-indigo-600 hover:bg-indigo-50 font-bold text-xs rounded-2xl flex items-center gap-1.5 transition shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> 구글 스프레드시트 열기
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-2xl">
                         <h5 class="text-xs font-bold text-indigo-900 flex items-center gap-1"><i class="fa-solid fa-triangle-exclamation"></i> 스프레드시트 적재 체크</h5>
                         <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
@@ -801,6 +866,27 @@
         </div>
     </div>
 
+    <!-- ================= [신규] 선생님 전용 비밀번호 인증 슬라이딩 오버레이 모달 ================= -->
+    <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-[2rem] p-8 shadow-2xl max-w-sm w-full transform scale-95 transition-transform duration-300">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-slate-100 text-slate-800 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="text-lg font-bold text-slate-900">관리자 인증</h4>
+                <p class="text-xs text-slate-500 mt-1">선생님 전용 비밀번호를 입력해 주세요.</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+                <p id="adminAuthError" class="hidden text-center text-red-500 text-xs font-semibold">비밀번호가 올바르지 않습니다.</p>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="closeAdminAuthModal()" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">취소</button>
+                    <button onclick="verifyAdminPassword()" class="py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition">인증 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 데이터 무손실 동적 Iframe 우회 전송용 폼 (CORS 전송 거부 완전 우회) -->
     <form id="hiddenFormSender" target="hiddenIframe" method="POST" class="hidden">
         <input type="hidden" name="grade" id="hf_grade">
@@ -813,8 +899,9 @@
     <iframe name="hiddenIframe" id="hiddenIframe" class="hidden"></iframe>
 
     <script>
-        // 공통 구글 앱스 스크립트 배포 주소 (선생님 스프레드시트 배포 완료 버전 탑재)
+        // 전역 정의부: 스프레드시트 적재용 웹앱 주소 및 미션용 가상 스크립트 연결 주소
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyitlzVGsfoytSKZBbkA-vTIKTfXS9aJoU0ArFNuvPWo_xFLU4x1PV7g9mzh7QgzNrxuA/exec"; 
+        const MISSION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyitlzVGsfoytSKZBbkA-vTIKTfXS9aJoU0ArFNuvPWo_xFLU4x1PV7g9mzh7QgzNrxuA/exec";
 
         const mainModal = document.getElementById('consultationModal');
         const mainModalContent = mainModal.querySelector('.transform');
@@ -869,7 +956,7 @@
                 title: "조금씩 꼬물꼬물!<br><span class=\"text-sky-400 serif-font\">'움직이는 사물'</span> 만들기",
                 category: "[오늘의 영상 미션] 사물 스톱모션",
                 steps: [
-                    "<strong>Step 1. 움직일 피사체 선정</strong><br>지우개, 가위, 클레이, 장난감 등 교실에서 흔하게 찾아볼 수 있는 사물을 1개 고릅니다.",
+                    "<strong>Step 1. 움직일 피사체 선정</strong><br>지우개, 가위, clay, 장난감 등 교실에서 흔하게 찾아볼 수 있는 사물을 1개 고릅니다.",
                     "<strong>Step 2. 미세 간격 사진 촬영</strong><br>카메라가 고정된 상태에서 사물을 1cm씩 조금씩 움직이고 사진을 1장씩 뚝뚝 찍습니다.",
                     "<strong>Step 3. 프레임 합성</strong><br>사진을 편집기 타임라인에 부드럽게 붙이고 장당 0.1~0.2초의 빠른 프레임 속도로 이어서 완성해 보세요!"
                 ],
@@ -932,7 +1019,7 @@
             }
         };
 
-        // 20개 미디어 크리에이터 핵심 사전 탑재 (종횡비 오류 완벽 해결)
+        // 20개 미디어 크리에이터 핵심 사전 탑재
         const GLOSSARY_TERMS = [
             {
                 term: "종횡비 (Aspect Ratio)",
@@ -1095,7 +1182,7 @@
                     {
                         img: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=600",
                         title: "3단계: 촬영 직전의 렌즈 샤워 🧼",
-                        desc: "카메라 렌즈에 묻어있는 지문과 먼지는 영상에서 빛 번짐 현상을 만들어요. 촬영 직전 안경수건이나 소매 끝으로 쓱 문질러 주는 간단한 습관이 유튜버들만이 아는 숨겨진 최고의 장비 보정이랍니다!"
+                        desc: "카메라 렌즈에 묻어있는 지문이나 먼지는 영상에서 빛 번짐 현상을 만들어요. 촬영 직전 안경수건이나 소매 끝으로 쓱 문질러 주는 간단한 습관이 유튜버들만이 아는 숨겨진 최고의 장비 보정이랍니다!"
                     }
                 ],
                 quizzes: [
@@ -1113,7 +1200,7 @@
                     },
                     {
                         question: "동영상을 촬영하기 직전 렌즈에 빛이 지저분하게 번지는 것을 막기 위해 반드시 실천해야 할 가장 간단하고 훌륭한 습관은 무엇인가요?",
-                        options: ["1. 스마트폰 전원을 껐다 켠다.", "2. 렌즈 클리너나 깨끗한 천으로 가볍게 닦는다.", "3. 손가락에 침을 발라 비빈다.", "4. 필터를 10개 씌운다."],
+                        options: ["1. 스마트폰 전원을 꺾다 켠다.", "2. 렌즈 클리너나 깨끗한 천으로 가볍게 닦는다.", "3. 손가락에 침을 발라 비빈다.", "4. 필터를 10개 씌운다."],
                         answer: 2,
                         feedback: "정답입니다! 지문을 깨끗하게 지우는 기본이 명작 비디오를 탄생시키는 기본 자세입니다."
                     }
@@ -1197,7 +1284,7 @@
                         question: "배경과 인물이 한 몸처럼 느껴지도록 합성을 진행할 때, 인물은 녹색 스크린으로부터 약 어느 정도 거리 이상 떨어지는 것이 좋나요?",
                         options: ["1. 딱 붙을수록 좋으므로 0cm", "2. 최소 1m 이상 이격", "3. 약 20m 뒤쪽", "4. 학교 운동장 밖"],
                         answer: 2,
-                        feedback: "맞아요! 빛 반사와 그림자를 분리시키기 위해 1미터 이상의 이격은 기본입니다."
+                        feedback: "맞아요! 빗 반사와 그림자를 분리시키기 위해 1미터 이상의 이격은 기본입니다."
                     }
                 ]
             },
@@ -1244,583 +1331,33 @@
             }
         };
 
-        /* ================= 5대 미션 실시간 연동 선택기 ================= */
-        function selectActiveMission(num) {
-            for (let i = 1; i <= 5; i++) {
-                const tab = document.getElementById(`tab-mission-${i}`);
-                if (!tab) continue;
-                
-                if (MISSIONS_DATA[i].active) {
-                    tab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
+        // 모바일 내비게이션 토글 함수
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                if (menu.classList.contains('hidden')) {
+                    menu.classList.remove('hidden');
                 } else {
-                    tab.className = "mission-locked-btn px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed";
-                }
-            }
-
-            const selectedTab = document.getElementById(`tab-mission-${num}`);
-            if (selectedTab && MISSIONS_DATA[num].active) {
-                selectedTab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-indigo-600 text-white border-2 border-indigo-500";
-            }
-
-            const activeData = MISSIONS_DATA[num];
-            document.getElementById('currentMissionSubHeader').innerText = activeData.sub;
-            document.getElementById('currentMissionTitle').innerHTML = activeData.title;
-            document.getElementById('missionCategoryInput').value = activeData.category;
-
-            const guideContainer = document.getElementById('currentMissionGuide');
-            guideContainer.innerHTML = activeData.steps.map(step => `
-                <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                    ${step}
-                </div>
-            `).join('');
-
-            const chkContainer = document.getElementById('currentMissionChecklist');
-            chkContainer.innerHTML = activeData.checklist.map((item, idx) => `
-                <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
-                    <input type="checkbox" id="chk${idx + 1}" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
-                    <span>${item}</span>
-                </label>
-            `).join('');
-        }
-
-        /* ================= 팝업 제어 메인 로직 (독립 분리 설계) ================= */
-        function openModal(mode) {
-            mainModal.classList.remove('pointer-events-none');
-            mainModal.classList.add('opacity-100');
-            mainModalContent.classList.remove('scale-95');
-            mainModalContent.classList.add('scale-100');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            mainModal.classList.add('pointer-events-none');
-            mainModal.classList.remove('opacity-100');
-            mainModalContent.classList.remove('scale-100');
-            mainModalContent.classList.add('scale-95');
-            document.body.style.overflow = '';
-            
-            setTimeout(() => {
-                form.reset();
-                hideStatus();
-            }, 300);
-        }
-
-        // 로드맵 전용 신형 모달 컨트롤러 (닫기 버그 완벽 대처)
-        function openRoadmapModal() {
-            roadmapModal.classList.remove('pointer-events-none');
-            roadmapModal.classList.add('opacity-100');
-            roadmapModalContent.classList.remove('scale-95');
-            roadmapModalContent.classList.add('scale-100');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeRoadmapModal() {
-            roadmapModal.classList.add('pointer-events-none');
-            roadmapModal.classList.remove('opacity-100');
-            roadmapModalContent.classList.remove('scale-100');
-            roadmapModalContent.classList.add('scale-95');
-            document.body.style.overflow = '';
-            
-            setTimeout(() => {
-                dynamicRoadmapContent.innerHTML = '';
-            }, 300);
-        }
-
-        // 바깥 여백 터치 시 자동 닫힘 바인딩
-        roadmapModal.addEventListener('click', (e) => {
-            if (e.target === roadmapModal) closeRoadmapModal();
-        });
-        mainModal.addEventListener('click', (e) => {
-            if (e.target === mainModal) closeModal();
-        });
-
-        /* ================= 로드맵 배우기 연동 엔진 ================= */
-        function openStudy(levelKey) {
-            currentLevelKey = levelKey;
-            currentSlideIndex = 0;
-            const data = ROADMAP_DATA[levelKey];
-            if (!data) return;
-
-            openRoadmapModal();
-
-            // 왼쪽 사이드바 동적 컬러 테마 매핑
-            roadmapLeftSidebar.className = `w-full md:w-[40%] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden transition-colors duration-500 ${data.themeClass}`;
-            roadmapSidebarTitle.innerText = `Level-up 배움터`;
-            roadmapSidebarDesc.innerText = `[${data.title}] 단계입니다. 슬라이드를 넘기며 핵심 동영상 크리에이터 지식을 배워보세요.`;
-
-            renderSlide();
-        }
-
-        function renderSlide() {
-            const data = ROADMAP_DATA[currentLevelKey];
-            const slide = data.slides[currentSlideIndex];
-            let isLastSlide = (currentSlideIndex === data.slides.length - 1);
-            
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800">
-                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
-                        <span>LEARNING PROCESS</span>
-                        <span class="bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md">${currentSlideIndex + 1} / ${data.slides.length} 페이지</span>
-                    </div>
-
-                    <div class="w-full h-44 rounded-2xl overflow-hidden bg-slate-100 relative shadow-sm">
-                        <img src="${slide.img}" alt="${slide.title}" class="w-full h-full object-cover">
-                    </div>
-
-                    <h4 class="font-bold text-indigo-950 text-lg leading-snug">${slide.title}</h4>
-                    <p class="text-slate-600 text-xs md:text-sm leading-relaxed">${slide.desc}</p>
-
-                    <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
-                        <button onclick="prevSlide()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition ${currentSlideIndex === 0 ? 'opacity-50 pointer-events-none' : ''}">
-                            <i class="fa-solid fa-arrow-left mr-1"></i> 이전
-                        </button>
-                        
-                        ${isLastSlide ? `
-                            <button onclick="startQuizFromLearn()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition shadow-md">
-                                다 배웠어요! 퀴즈 풀기 <i class="fa-solid fa-circle-play ml-1"></i>
-                            </button>
-                        ` : `
-                            <button onclick="nextSlide()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-md">
-                                다음 장 <i class="fa-solid fa-arrow-right ml-1"></i>
-                            </button>
-                        `}
-                    </div>
-                </div>
-            `;
-        }
-
-        function nextSlide() {
-            if (currentSlideIndex < ROADMAP_DATA[currentLevelKey].slides.length - 1) {
-                currentSlideIndex++;
-                renderSlide();
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlideIndex > 0) {
-                currentSlideIndex--;
-                renderSlide();
-            }
-        }
-
-        function startQuizFromLearn() {
-            openQuiz(currentLevelKey);
-        }
-
-        /* ================= 로드맵 서바이벌 퀴즈 연동 엔진 (오동작 완전 수정) ================= */
-        function openQuiz(levelKey) {
-            currentLevelKey = levelKey;
-            activeQuizStep = 1;
-            quizScore = 0;
-            const data = ROADMAP_DATA[levelKey];
-            if (!data) return;
-
-            openRoadmapModal();
-
-            roadmapLeftSidebar.className = `w-full md:w-[40%] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden transition-colors duration-500 ${data.themeClass}`;
-            roadmapSidebarTitle.innerText = `Level-up 서바이벌 퀴즈`;
-            roadmapSidebarDesc.innerText = `총 3단계의 영상 연동 퀴즈입니다. 정답을 외쳐 성장 포인트를 터치해 보세요!`;
-
-            renderQuizStep();
-        }
-
-        function renderQuizStep() {
-            const data = ROADMAP_DATA[currentLevelKey];
-            const quiz = data.quizzes[activeQuizStep - 1];
-
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800" id="quizContainer">
-                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
-                        <span>STAGE ${activeQuizStep} / 3</span>
-                        <span class="bg-amber-50 text-amber-600 px-2 py-1 rounded-md">현재 정답 수: ${quizScore}개</span>
-                    </div>
-
-                    <h4 class="font-bold text-indigo-950 text-sm md:text-base leading-snug">
-                        <i class="fa-solid fa-circle-question text-amber-500 mr-2"></i>Q${activeQuizStep}. ${quiz.question}
-                    </h4>
-
-                    <div id="quizOptionsContainer" class="space-y-2.5 pt-2">
-                        ${quiz.options.map((option, idx) => `
-                            <button onclick="selectOption(${idx + 1})" class="quiz-opt-btn w-full text-left p-4 bg-slate-50 hover:bg-indigo-50 rounded-2xl text-xs md:text-sm text-slate-700 font-semibold border border-slate-100 hover:border-indigo-200 transition">
-                                ${option}
-                            </button>
-                        `).join('')}
-                    </div>
-
-                    <div id="quizFeedbackArea" class="hidden space-y-3 pt-3 animate-fade-in">
-                        <p id="quizFeedback" class="text-xs font-bold p-3 rounded-xl transition-all duration-300"></p>
-                        <button onclick="advanceQuiz()" class="w-full py-3 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition flex items-center justify-center gap-2 shadow-md">
-                            <span>다음 문제 풀기</span> <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function selectOption(selectedVal) {
-            const data = ROADMAP_DATA[currentLevelKey];
-            const quiz = data.quizzes[activeQuizStep - 1];
-            
-            const feedbackArea = document.getElementById('quizFeedbackArea');
-            const feedback = document.getElementById('quizFeedback');
-            const options = document.querySelectorAll('.quiz-opt-btn');
-
-            options.forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'pointer-events-none');
-            });
-
-            feedback.className = "text-xs font-bold p-3 rounded-xl transition-all duration-300";
-
-            if (selectedVal === quiz.answer) {
-                quizScore++;
-                feedback.innerText = `⭕ 정답입니다! ${quiz.feedback}`;
-                feedback.classList.add('bg-green-100', 'text-green-800');
-            } else {
-                feedback.innerText = `❌ 아쉬워요! 정답은 ${quiz.answer}번이었습니다.`;
-                feedback.classList.add('bg-red-100', 'text-red-800');
-            }
-
-            feedbackArea.classList.remove('hidden');
-        }
-
-        function advanceQuiz() {
-            if (activeQuizStep < 3) {
-                activeQuizStep++;
-                renderQuizStep();
-            } else {
-                renderQuizResult();
-            }
-        }
-
-        function renderQuizResult() {
-            let resultComment = "";
-            let resultIcon = "";
-            
-            if (quizScore === 3) {
-                resultIcon = "🏆";
-                resultComment = "당신은 최고의 영상 신동! 미디어 마스터 칭호를 부여합니다.";
-            } else if (quizScore >= 1) {
-                resultIcon = "⭐️";
-                resultComment = "좋은 시도였어요! 틀린 부분을 복습해 만점에 재도전 해보세요.";
-            } else {
-                resultIcon = "💡";
-                resultComment = "다시 한 번 배움터를 가볍게 읽어본다면 충분히 통과할 수 있습니다!";
-            }
-
-            dynamicRoadmapContent.innerHTML = `
-                <div class="text-center py-8 space-y-4 text-slate-800 font-sans">
-                    <span class="text-6xl">${resultIcon}</span>
-                    <h3 class="text-2xl font-bold text-indigo-950">퀴즈 도전 완료!</h3>
-                    <p class="text-base font-semibold text-slate-600">총 3문제 중 <span class="text-indigo-600 font-bold">${quizScore}문제</span> 정답!</p>
-                    <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">${resultComment}</p>
-                    
-                    <div class="pt-6 flex justify-center space-x-3">
-                        <button onclick="openQuiz('${currentLevelKey}')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">다시 도전</button>
-                        <button onclick="closeRoadmapModal()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-md">로드맵 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        /* ================= 미디어 용어사전 팝업 연동 엔진 (오류 해결 완료) ================= */
-        function openGlossary() {
-            openRoadmapModal();
-
-            roadmapLeftSidebar.className = "w-full md:w-[40%] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-indigo-700 to-sky-600";
-            roadmapSidebarTitle.innerText = "미디어 용어사전";
-            roadmapSidebarDesc.innerText = "중학생 크리에이터가 알아야 할 20가지 핵심 미디어 필수 상식집! 매칭 퍼즐과 초성 퀴즈도 들어있습니다.";
-
-            renderGlossaryHub();
-        }
-
-        function renderGlossaryHub() {
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800">
-                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
-                        <span>GLOSSARY CENTER</span>
-                        <span class="bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md">총 20개 핵심 용어 수록</span>
-                    </div>
-
-                    <!-- 단어장 목록 리스트 -->
-                    <div class="space-y-2.5 max-h-[42vh] overflow-y-auto pr-1">
-                        ${GLOSSARY_TERMS.map((item, idx) => `
-                            <div onclick="showGlossaryDetail(${idx})" class="p-4 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border border-slate-100 hover:border-indigo-100 cursor-pointer transition flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
-                                    <img src="${item.img}" alt="${item.term}" class="w-full h-full object-cover">
-                                </div>
-                                <div class="flex-grow text-left">
-                                    <h4 class="font-bold text-slate-900 text-sm">${item.term}</h4>
-                                    <p class="text-indigo-600 text-[11px] font-semibold mt-0.5">💡 한 줄 요약: ${item.easy}</p>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2 justify-between items-center">
-                        <div class="flex gap-2">
-                            <button onclick="startWordMatchGame()" class="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1">
-                                <i class="fa-solid fa-gamepad"></i> 짝 맞추기
-                            </button>
-                            <button onclick="startInitialConsonantGame()" class="px-4 py-2.5 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-600 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1">
-                                <i class="fa-solid fa-keyboard"></i> 초성 퀴즈 게임
-                            </button>
-                        </div>
-                        <button onclick="closeRoadmapModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">사전 닫기</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function showGlossaryDetail(index) {
-            const item = GLOSSARY_TERMS[index];
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800">
-                    <button onclick="renderGlossaryHub()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline">
-                        <i class="fa-solid fa-arrow-left"></i> 목록으로 돌아가기
-                    </button>
-
-                    <div class="w-full h-44 rounded-2xl overflow-hidden relative shadow-sm bg-slate-100">
-                        <img src="${item.img}" alt="${item.term}" class="w-full h-full object-cover">
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-indigo-950 text-lg">${item.term}</h4>
-                        <div class="bg-indigo-50 text-indigo-800 p-3 rounded-xl text-xs font-bold leading-snug">
-                            💡 쉽고 재밌는 이해: <br><span class="text-slate-700 font-medium">${item.easy}</span>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <h5 class="text-xs font-bold text-slate-400 uppercase tracking-widest">상세 튜토리얼</h5>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed">${item.desc}</p>
-                    </div>
-
-                    <div class="pt-4 border-t border-slate-100 flex justify-end">
-                        <button onclick="renderGlossaryHub()" class="px-5 py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">확인 완료</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function startWordMatchGame() {
-            matchedCount = 0;
-            selectedWordBtn = null;
-            const selectedSet = [...GLOSSARY_TERMS].sort(() => Math.random() - 0.5).slice(0, 4);
-
-            const words = selectedSet.map((item, idx) => ({ id: idx, rawId: idx, text: item.term.split(' ')[0], type: 'word' }));
-            const definitions = selectedSet.map((item, idx) => ({ id: idx, rawId: idx, text: item.easy, type: 'def' }));
-
-            const shuffle = (array) => array.sort(() => Math.random() - 0.5);
-            const shuffledWords = shuffle([...words]);
-            const shuffledDefs = shuffle([...definitions]);
-
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800">
-                    <button onclick="renderGlossaryHub()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline">
-                        <i class="fa-solid fa-arrow-left"></i> 사전 홈으로 돌아가기
-                    </button>
-
-                    <div class="bg-indigo-50 p-3 rounded-2xl text-[11px] text-indigo-950 font-semibold leading-relaxed">
-                        🎮 <strong>짝 맞추기</strong>: 왼쪽 용어 카드를 먼저 1개 누르고, 우측 설명 매칭 카드를 누르세요!
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 pt-2">
-                        <div class="space-y-2">
-                            <span class="text-[10px] font-bold text-slate-400 block mb-1">용어 카드</span>
-                            ${shuffledWords.map(w => `
-                                <button id="match-word-${w.id}" onclick="clickMatchCard(${w.id}, 'word')" class="w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-bold border border-slate-100 rounded-xl transition duration-150">
-                                    ${w.text}
-                                </button>
-                            `).join('')}
-                        </div>
-
-                        <div class="space-y-2">
-                            <span class="text-[10px] font-bold text-slate-400 block mb-1">설명 카드</span>
-                            ${shuffledDefs.map(d => `
-                                <button id="match-def-${d.id}" onclick="clickMatchCard(${d.id}, 'def')" class="w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-medium border border-slate-100 rounded-xl transition duration-150">
-                                    ${d.text}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <p id="gameSuccessMessage" class="hidden text-center text-green-600 font-bold text-xs animate-pulse">🎉 천재군요! 모든 단어 짝을 완벽히 맞추셨습니다!</p>
-
-                    <div class="pt-4 border-t border-slate-100 flex justify-end">
-                        <button onclick="startWordMatchGame()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition mr-2">다른 카드게임 시작</button>
-                        <button onclick="renderGlossaryHub()" class="px-5 py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition">사전으로</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function clickMatchCard(id, type) {
-            const wordBtn = document.getElementById(`match-word-${id}`);
-            const defBtn = document.getElementById(`match-def-${id}`);
-
-            if (type === 'word') {
-                if (wordBtn.classList.contains('bg-green-100')) return;
-
-                if (selectedWordBtn !== null) {
-                    const prevBtn = document.getElementById(`match-word-${selectedWordBtn}`);
-                    if (prevBtn && !prevBtn.classList.contains('bg-green-100')) {
-                        prevBtn.className = "w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-bold border border-slate-100 rounded-xl transition duration-150";
-                    }
-                }
-
-                selectedWordBtn = id;
-                wordBtn.className = "w-full p-3 bg-indigo-100 text-indigo-700 font-bold border-2 border-indigo-500 rounded-xl text-left text-xs transition duration-150";
-            } else if (type === 'def') {
-                if (selectedWordBtn === null) {
-                    alert("먼저 왼쪽에서 용어 카드를 하나 선택해 주세요!");
-                    return;
-                }
-                if (defBtn.classList.contains('bg-green-100')) return;
-
-                const selectedWordEl = document.getElementById(`match-word-${selectedWordBtn}`);
-
-                if (selectedWordBtn === id) {
-                    selectedWordEl.className = "w-full p-3 bg-green-100 text-green-800 font-bold border border-green-200 rounded-xl text-left text-xs";
-                    defBtn.className = "w-full p-3 bg-green-100 text-green-800 font-semibold border border-green-200 rounded-xl text-left text-xs";
-                    
-                    matchedCount++;
-                    selectedWordBtn = null;
-
-                    if (matchedCount === 4) {
-                        document.getElementById('gameSuccessMessage').classList.remove('hidden');
-                    }
-                } else {
-                    defBtn.className = "w-full p-3 bg-red-100 text-red-800 border border-red-200 rounded-xl text-left text-xs";
-                    setTimeout(() => {
-                        if (!defBtn.classList.contains('bg-green-100')) {
-                            defBtn.className = "w-full p-3 bg-slate-50 hover:bg-indigo-50 text-left text-xs text-slate-800 font-medium border border-slate-100 rounded-xl transition duration-150";
-                        }
-                    }, 800);
+                    menu.classList.add('hidden');
                 }
             }
         }
+    </script>
 
-        function startInitialConsonantGame() {
-            currentQuizIndex = 0;
-            scoreQuiz = 0;
-            playList = [...GLOSSARY_TERMS].sort(() => Math.random() - 0.5).slice(0, 3);
-            renderInitialConsonantStep();
-        }
-
-        function renderInitialConsonantStep() {
-            const item = playList[currentQuizIndex];
-            dynamicRoadmapContent.innerHTML = `
-                <div class="space-y-4 animate-fade-in text-slate-800">
-                    <button onclick="renderGlossaryHub()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline">
-                        <i class="fa-solid fa-arrow-left"></i> 사전 홈으로 돌아가기
-                    </button>
-
-                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
-                        <span>초성 퀴즈 STAGE ${currentQuizIndex + 1} / 3</span>
-                        <span class="text-teal-600 font-bold">맞힌 개수: ${scoreQuiz}개</span>
-                    </div>
-
-                    <div class="bg-teal-50 border border-teal-100 p-5 rounded-2xl text-center">
-                        <span class="text-xs text-teal-600 font-bold block mb-1">Q. 아래 힌트를 보고 알맞은 미디어 용어를 작성해 주세요!</span>
-                        <h3 class="text-3xl font-black text-teal-900 tracking-widest mt-2 mb-1">${item.hint}</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">한 줄 비유: ${item.easy}</p>
-                    </div>
-
-                    <div class="space-y-3">
-                        <input type="text" id="initialQuizUserInput" placeholder="정답을 한글로 입력하세요 (예: 종횡비)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
-                        <p id="initialQuizFeedback" class="hidden p-3 rounded-xl text-xs font-semibold"></p>
-                    </div>
-
-                    <div id="initialConsonantActionArea" class="flex justify-between items-center pt-2">
-                        <button onclick="checkInitialConsonantAnswer()" id="initialQuizSubmitBtn" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-md transition">정답 제출하기</button>
-                        <button onclick="advanceInitialConsonant()" id="initialQuizNextBtn" class="hidden w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-1"><span>다음 단계로 이동</span> <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function checkInitialConsonantAnswer() {
-            const item = playList[currentQuizIndex];
-            const rawUserVal = document.getElementById('initialQuizUserInput').value.trim();
-            const feedback = document.getElementById('initialQuizFeedback');
-            const submitBtn = document.getElementById('initialQuizSubmitBtn');
-            const nextBtn = document.getElementById('initialQuizNextBtn');
-
-            if (!rawUserVal) {
-                alert("정답 칸을 채워주세요!");
-                return;
-            }
-
-            const cleanedUserVal = rawUserVal.replace(/\s+/g, '');
-            const correctAnswer = item.term.split(' ')[0].replace(/\s+/g, '');
-
-            feedback.className = "p-3 rounded-xl text-xs font-semibold transition-all duration-300";
-
-            if (cleanedUserVal === correctAnswer) {
-                scoreQuiz++;
-                feedback.innerText = `⭕ 완전 정확합니다! [${item.term}] 가 정답입니다.`;
-                feedback.classList.add('bg-green-100', 'text-green-800');
-            } else {
-                feedback.innerText = `❌ 틀렸습니다! 정답은 [${item.term}] 이었습니다.`;
-                feedback.classList.add('bg-red-100', 'text-red-800');
-            }
-
-            feedback.classList.remove('hidden');
-            document.getElementById('initialQuizUserInput').disabled = true;
-
-            submitBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden');
-        }
-
-        function advanceInitialConsonant() {
-            if (currentQuizIndex < 2) {
-                currentQuizIndex++;
-                renderInitialConsonantStep();
-            } else {
-                let resultComment = "";
-                let resultIcon = "";
-                if (scoreQuiz === 3) {
-                    resultIcon = "🎉";
-                    resultComment = "초성 퀴즈 완전 지배자! 미디어 마스터가 되셨습니다.";
-                } else if (scoreQuiz >= 1) {
-                    resultIcon = "👍";
-                    resultComment = "단어 실력이 매우 우수합니다! 조금만 복습하면 3점 만점 가능!";
-                } else {
-                    resultIcon = "📖";
-                    resultComment = "동영상 용어들과 조금 친해질 시간이군요! 사전을 다시 훑어보세요.";
-                }
-
-                dynamicRoadmapContent.innerHTML = `
-                    <div class="text-center py-8 space-y-4 text-slate-800 font-sans">
-                        <span class="text-6xl animate-bounce inline-block">${resultIcon}</span>
-                        <h3 class="text-2xl font-bold text-indigo-950">초성 퀴즈 결과</h3>
-                        <p class="text-base font-semibold text-slate-600">3문제 중 <span class="text-indigo-600 font-bold">${scoreQuiz}개</span> 정답!</p>
-                        <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">${resultComment}</p>
-                        
-                        <div class="pt-6 flex justify-center space-x-3">
-                            <button onclick="startInitialConsonantGame()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">게임 재시작</button>
-                            <button onclick="renderGlossaryHub()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-md">사전 메인으로</button>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        /* ================= [수정] 무손실 우회 데이터 전송 방식 엔진 바인딩 ================= */
-        form.addEventListener('submit', (e) => executeInvisibleSubmit(e, form, submitBtn, statusAlert));
-        missionForm.addEventListener('submit', (e) => executeInvisibleSubmit(e, missionForm, missionSubmitBtn, missionStatusAlert));
-
-        // 구글 앱스 스크립트 특화: CORS 차단 및 전송 거부를 원천 무효화하는 아이프레임 우회 전송 기법
-        function executeInvisibleSubmit(e, targetForm, targetButton, targetAlert) {
+    <!-- 안전을 보장하는 우회 전송 스크립트 모음 -->
+    <script>
+        // 상담 / 질문 전송 통합 구현
+        async function executeInvisibleSubmit(e, targetForm, targetButton, targetAlert) {
             e.preventDefault();
 
             // 오늘의 미션 제출 시 체크리스트 유효성 체크
             if (targetForm.id === 'missionForm') {
-                const c1 = document.getElementById('chk1').checked;
-                const c2 = document.getElementById('chk2').checked;
-                const c3 = document.getElementById('chk3').checked;
+                const chk1 = document.getElementById('chk1');
+                const chk2 = document.getElementById('chk2');
+                const chk3 = document.getElementById('chk3');
+                const c1 = chk1 ? chk1.checked : false;
+                const c2 = chk2 ? chk2.checked : false;
+                const c3 = chk3 ? chk3.checked : false;
                 if (!c1 || !c2 || !c3) {
                     showFieldStatus(targetAlert, '미션 자가 체크리스트 3가지를 모두 성실히 체크해 주세요!', 'error');
                     return;
@@ -1843,7 +1380,7 @@
 
             // 가상 전송 폼 액션 설정 및 실질적 전송 단행
             const hiddenForm = document.getElementById('hiddenFormSender');
-            hiddenForm.action = WEB_APP_URL;
+            hiddenForm.action = targetForm.id === 'missionForm' ? MISSION_SCRIPT_URL : WEB_APP_URL;
             
             try {
                 hiddenForm.submit(); // 아이프레임 타깃 전송으로 브라우저 CORS 차단 완전 회피
@@ -1892,7 +1429,189 @@
             missionStatusAlert.classList.add('hidden');
         }
 
-        /* ================= 관리자 제어 탭 비주얼 및 데이터 변경 제어반 ================= */
+        /* ================= 관리자 비밀번호 확인 및 대시보드 스위치 ================= */
+        function toggleAdminPanel() {
+            const authModal = document.getElementById('adminAuthModal');
+            const authContent = authModal.querySelector('.transform');
+            const passwordInput = document.getElementById('adminPasswordInput');
+            const errorMsg = document.getElementById('adminAuthError');
+            
+            passwordInput.value = '';
+            errorMsg.classList.add('hidden');
+            
+            authModal.classList.remove('pointer-events-none');
+            authModal.classList.add('opacity-100');
+            authContent.classList.remove('scale-95');
+            authContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            
+            // 패스워드 입력 필드에서 엔터 키 입력 시 자동 인증 처리 단축키 지원
+            passwordInput.onkeydown = function(e) {
+                if (e.key === 'Enter') {
+                    verifyAdminPassword();
+                }
+            };
+            setTimeout(() => passwordInput.focus(), 150);
+        }
+
+        function closeAdminAuthModal() {
+            const authModal = document.getElementById('adminAuthModal');
+            const authContent = authModal.querySelector('.transform');
+            
+            authModal.classList.add('pointer-events-none');
+            authModal.classList.remove('opacity-100');
+            authContent.classList.remove('scale-100');
+            authContent.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        function verifyAdminPassword() {
+            const passwordInput = document.getElementById('adminPasswordInput');
+            const errorMsg = document.getElementById('adminAuthError');
+            
+            if (passwordInput.value === "0115") {
+                closeAdminAuthModal();
+                openAdminPanel();
+            } else {
+                errorMsg.classList.remove('hidden');
+                passwordInput.select();
+                passwordInput.focus();
+            }
+        }
+
+        function openAdminPanel() {
+            const adModal = document.getElementById('adminPanelModal');
+            const adContent = adModal.querySelector('.transform');
+
+            adModal.classList.remove('pointer-events-none');
+            adModal.classList.add('opacity-100');
+            adContent.classList.remove('scale-95');
+            adContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+
+            // 현재 전용 미션 스크립트 경로 로딩
+            document.getElementById('adminScriptUrlInput').value = WEB_APP_URL;
+
+            // 내용 제어 폼 값 실시간 불러오기
+            document.getElementById('editMainTitle').value = document.getElementById('mainTitle').innerHTML.trim();
+            document.getElementById('editMainSubtitle').value = document.getElementById('mainSubtitle').innerHTML.trim();
+            document.getElementById('editLocName').value = document.getElementById('sidebarLocName').innerText.trim();
+            document.getElementById('editLocTime').value = document.getElementById('sidebarLocTime').innerText.trim();
+            document.getElementById('editMislsuup').value = document.getElementById('mislsuupAnnounce').innerText.trim();
+
+            renderAdminMissionControls();
+            switchAdminSubTab('missions');
+        }
+
+        function closeAdminPanel() {
+            const adModal = document.getElementById('adminPanelModal');
+            const adContent = adModal.querySelector('.transform');
+
+            adModal.classList.add('pointer-events-none');
+            adModal.classList.remove('opacity-100');
+            adContent.classList.remove('scale-100');
+            adContent.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        function switchAdminSubTab(tabName) {
+            const tabs = ['missions', 'contents', 'submissions'];
+            tabs.forEach(t => {
+                document.getElementById(`adminPanel-${t}`).classList.add('hidden');
+                document.getElementById(`adminTabBtn-${t}`).classList.remove('bg-slate-700', 'text-white');
+            });
+
+            document.getElementById(`adminPanel-${tabName}`).classList.remove('hidden');
+            document.getElementById(`adminTabBtn-${tabName}`).classList.add('bg-slate-700', 'text-white');
+
+            if (tabName === 'missions') {
+                document.getElementById('adminTabTitle').innerText = "실시간 미션 상태 제어반";
+            } else if (tabName === 'contents') {
+                document.getElementById('adminTabTitle').innerText = "실시간 홈페이지 내용 편집";
+            } else {
+                document.getElementById('adminTabTitle').innerText = "구글 스프레드시트 적재 및 링크 점검";
+            }
+        }
+
+        function renderAdminMissionControls() {
+            const container = document.getElementById('adminMissionListControl');
+            container.innerHTML = Object.entries(MISSIONS_DATA).map(([key, item]) => `
+                <div class="flex justify-between items-center p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-800">${item.tabName}</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">DB 입력 시 카테고리값: ${item.category}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold ${item.active ? 'text-green-600' : 'text-slate-400'}">
+                            ${item.active ? '● 학생화면 활성중' : '○ 잠금 상태'}
+                        </span>
+                        <button onclick="toggleMissionActiveStatus(${key})" class="px-3.5 py-1.5 rounded-lg text-[11px] font-bold transition ${item.active ? 'bg-rose-50 hover:bg-rose-100 text-rose-600' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-600'}">
+                            ${item.active ? '잠그기' : '활성화'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleMissionActiveStatus(key) {
+            if (key == 1 && MISSIONS_DATA[1].active) {
+                alert("최소한 1개의 미션은 항상 켜져있어야 하므로 미션 1은 끌 수 없습니다.");
+                return;
+            }
+
+            MISSIONS_DATA[key].active = !MISSIONS_DATA[key].active;
+            
+            const currentTabBtn = document.getElementById(`tab-mission-${key}`);
+            const isCurrentlySelected = currentTabBtn ? currentTabBtn.classList.contains('bg-indigo-600') : false;
+            
+            renderAdminMissionControls();
+            
+            for (let i = 1; i <= 5; i++) {
+                const tab = document.getElementById(`tab-mission-${i}`);
+                if (!tab) continue;
+
+                if (MISSIONS_DATA[i].active) {
+                    tab.disabled = false;
+                    tab.classList.remove('mission-locked-btn', 'text-slate-400', 'cursor-not-allowed');
+                } else {
+                    tab.disabled = true;
+                    tab.className = "mission-locked-btn px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed";
+                }
+            }
+
+            if (isCurrentlySelected && !MISSIONS_DATA[key].active) {
+                selectActiveMission(1);
+            } else {
+                let selectedNum = 1;
+                for (let j = 1; j <= 5; j++) {
+                    const tabBtn = document.getElementById(`tab-mission-${j}`);
+                    if (tabBtn && tabBtn.classList.contains('bg-indigo-600')) {
+                        selectedNum = j;
+                    }
+                }
+                selectActiveMission(selectedNum);
+            }
+        }
+
+        // [신규 기능 추가] 관리자 내용 편집 반영 함수
+        function applyHomepageContents() {
+            const newTitle = document.getElementById('editMainTitle').value;
+            const newSubtitle = document.getElementById('editMainSubtitle').value;
+            const newLocName = document.getElementById('editLocName').value;
+            const newLocTime = document.getElementById('editLocTime').value;
+            const newMislsuup = document.getElementById('editMislsuup').value;
+
+            // 실제 홈페이지 엘리먼트에 실시간 교체
+            document.getElementById('mainTitle').innerHTML = newTitle;
+            document.getElementById('mainSubtitle').innerHTML = newSubtitle;
+            document.getElementById('sidebarLocName').innerText = newLocName;
+            document.getElementById('sidebarLocTime').innerText = newLocTime;
+            document.getElementById('mislsuupAnnounce').innerText = newMislsuup;
+
+            alert("🎉 편집하신 내용이 메인 화면과 팝업창에 성공적으로 적용되었습니다!");
+            closeAdminPanel();
+        }
+
         // 관리자 제어반에서 임시 적재 테스트 트리거
         function triggerTestSubmission() {
             const testBtn = document.getElementById('testSubmissionBtn');
@@ -1911,7 +1630,7 @@
             document.getElementById('hf_content').value = 'https://ocean-art.com/connection-check-success';
 
             const hiddenForm = document.getElementById('hiddenFormSender');
-            hiddenForm.action = WEB_APP_URL;
+            hiddenForm.action = MISSION_SCRIPT_URL;
 
             try {
                 hiddenForm.submit();
@@ -1930,6 +1649,40 @@
                 testBtn.innerText = "테스트 데이터 행 추가";
             }
         }
+
+        // GSAP ScrollTrigger Fallback 및 초기화 트리거
+        document.addEventListener("DOMContentLoaded", function() {
+            // GSAP 초기 스크롤 트리거 정의
+            gsap.registerPlugin(ScrollTrigger);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach((el, index) => {
+                gsap.to(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power4.out",
+                    delay: (index * 0.1) % 0.3
+                });
+            });
+
+            // 깃허브 호스팅/아이프레임 특수 환경 대비 스크롤 트리거 강제 강하 안전 대몬 가동 (콘텐츠 안보임 현상 해결)
+            setTimeout(() => {
+                revealElements.forEach(el => {
+                    el.style.opacity = "1";
+                    el.style.transform = "translateY(0px)";
+                    el.style.transition = "opacity 0.8s ease-out, transform 0.8s ease-out";
+                });
+            }, 1000);
+
+            // 초기 상태 실행
+            selectActiveMission(1);
+        });
     </script>
 </body>
 </html>
