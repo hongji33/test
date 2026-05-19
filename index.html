@@ -329,7 +329,7 @@
                         <p class="text-slate-500 text-sm leading-relaxed mb-8">기획, 연출, 출연, 촬영, 편집을 모두 담아 오션 숏폼 무비 어워즈에 정식 출품해 봅니다.</p>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
-                        <button onclick="openStudy('lv4')" class="py-2.5 bg-rose-50 text-rose-600 font-bold text-xs rounded-xl hover:bg-rose-100 transition">배우기</button>
+                        <button onclick="openStudy('lv4')" class="py-2.5 bg-rose-50 text-rose-600 font-bold text-xs rounded-xl hover:bg-slate-800 transition">배우기</button>
                         <button onclick="openQuiz('lv4')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
                     </div>
                 </div>
@@ -488,7 +488,7 @@
                     <i class="fa-solid fa-bezier-curve"></i>
                 </div>
                 <h4 class="text-2xl font-bold mb-4">디지털 디자인</h4>
-                <p class="text-slate-500 leading-relaxed text-sm">태블릿과 다양한 툴을 활용하여 현대적인 시각 언어를 배우고 소통하는 방법을 익힙니다.</p>
+                <p class="text-slate-500 leading-relaxed text-sm">태블릿 og 다양한 툴을 활용하여 현대적인 시각 언어를 배우고 소통하는 방법을 익힙니다.</p>
             </div>
             
             <div class="bg-white p-10 rounded-[2rem] border border-slate-100 interactive-card reveal group" style="transition-delay: 0.2s;">
@@ -773,7 +773,7 @@
 
             <!-- 오른쪽 내용 제어부 -->
             <div class="w-full md:w-[70%] p-8 overflow-y-auto max-h-[85vh]">
-                <!-- 패널 닫기 -->
+                <!-- 닫기 -->
                 <div class="flex justify-between items-center mb-6">
                     <h4 class="text-lg font-bold text-slate-900" id="adminTabTitle">실시간 미션 관리 및 활성화</h4>
                     <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -915,6 +915,14 @@
         let currentQuizIndex = 0;
         let playList = [];
         let scoreQuiz = 0;
+
+        // 전역 DOM 변수들의 선언 (이 부분이 누락되어 ReferenceError가 발생했던 지점입니다!)
+        let form, submitBtn, statusAlert;
+        let missionForm, missionSubmitBtn, missionStatusAlert;
+        let mainModal, mainModalContent;
+        let roadmapModal, roadmapModalContent;
+        let roadmapLeftSidebar, roadmapSidebarTitle, roadmapSidebarDesc, dynamicRoadmapContent;
+        let hfGrade, hfClass, hfNumber, hfName, hfCategory, hfContent, hiddenFormSender;
 
         /* ================= 5대 미션 데이터 구조체 정의 ================= */
         const MISSIONS_DATA = {
@@ -1317,56 +1325,15 @@
             }
         };
 
-        // DOM Elements - 초기 바인딩 시 에러 방지를 위해 변수들을 선언하고 초기화함
-        let hfGrade, hfClass, hfNumber, hfName, hfCategory, hfContent, hiddenFormSender;
-
-        // 동적 미션 탭 활성화 변경 제어기 (안전한 선행 호출용 함수 정의)
-        function selectActiveMission(num) {
-            for (let i = 1; i <= 5; i++) {
-                const tab = document.getElementById(`tab-mission-${i}`);
-                if (!tab) continue;
-                
-                if (MISSIONS_DATA[i].active) {
-                    tab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
-                    tab.disabled = false;
-                    tab.classList.remove('mission-locked-btn', 'text-slate-400', 'cursor-not-allowed');
+        // 모바일 내비게이션 토글 함수
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                if (menu.classList.contains('hidden')) {
+                    menu.classList.remove('hidden');
                 } else {
-                    tab.className = "mission-locked-btn px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed";
-                    tab.disabled = true;
+                    menu.classList.add('hidden');
                 }
-            }
-
-            const selectedTab = document.getElementById(`tab-mission-${num}`);
-            if (selectedTab && MISSIONS_DATA[num].active) {
-                selectedTab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-indigo-600 text-white border-2 border-indigo-500";
-            }
-
-            const activeData = MISSIONS_DATA[num];
-            const subHeader = document.getElementById('currentMissionSubHeader');
-            const title = document.getElementById('currentMissionTitle');
-            const categoryInput = document.getElementById('missionCategoryInput');
-
-            if (subHeader) subHeader.innerText = activeData.sub;
-            if (title) title.innerHTML = activeData.title;
-            if (categoryInput) categoryInput.value = activeData.category;
-
-            const guideContainer = document.getElementById('currentMissionGuide');
-            if (guideContainer) {
-                guideContainer.innerHTML = activeData.steps.map(step => `
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                        ${step}
-                    </div>
-                `).join('');
-            }
-
-            const chkContainer = document.getElementById('currentMissionChecklist');
-            if (chkContainer) {
-                chkContainer.innerHTML = activeData.checklist.map((item, idx) => `
-                    <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
-                        <input type="checkbox" id="chk${idx + 1}" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
-                        <span>${item}</span>
-                    </label>
-                `).join('');
             }
         }
 
@@ -1903,16 +1870,6 @@
             }
         }
 
-        // 로드맵 수동 다음 문제 풀기 함수
-        function advanceQuiz() {
-            if (activeQuizStep < 3) {
-                activeQuizStep++;
-                renderQuizStep();
-            } else {
-                renderQuizResult();
-            }
-        }
-
         /* ================= 무손실 우회 데이터 전송 방식 엔진 바인딩 ================= */
         // 구글 앱스 스크립트 특화: CORS 차단 및 전송 거부를 원천 무효화하는 아이프레임 우회 전송 기법
         function executeInvisibleSubmit(e, targetForm, targetButton, targetAlert) {
@@ -1964,7 +1921,9 @@
                             document.getElementById('chk2').checked = false;
                             document.getElementById('chk3').checked = false;
                         } else {
-                            setTimeout(() => closeModal(), 1500);
+                            setTimeout(() => {
+                                closeModal();
+                            }, 1500);
                         }
                     }, 1200);
 
@@ -2149,12 +2108,12 @@
 
         function switchAdminSubTab(tabName) {
             const tabs = ['missions', 'contents', 'submissions'];
-            tabs.forEach(t => {
-                const pnl = document.getElementById(`adminPanel-${t}`);
-                const btn = document.getElementById(`adminTabBtn-${t}`);
+            for (let i = 0; i < tabs.length; i++) {
+                const pnl = document.getElementById(`adminPanel-${tabs[i]}`);
+                const btn = document.getElementById(`adminTabBtn-${tabs[i]}`);
                 if (pnl) pnl.classList.add('hidden');
                 if (btn) btn.classList.remove('bg-slate-700', 'text-white');
-            });
+            }
 
             const targetPnl = document.getElementById(`adminPanel-${tabName}`);
             const targetBtn = document.getElementById(`adminTabBtn-${tabName}`);
@@ -2274,6 +2233,25 @@
         // GSAP ScrollTrigger Fallback 및 초기화 트리거
         document.addEventListener("DOMContentLoaded", function() {
             // 전역 변수들의 DOM 바인딩을 DOMContentLoaded 내에서 우선 안전하게 수행합니다.
+            form = document.getElementById('consultationForm');
+            submitBtn = document.getElementById('submitBtn');
+            statusAlert = document.getElementById('statusAlert');
+
+            missionForm = document.getElementById('missionForm');
+            missionSubmitBtn = document.getElementById('missionSubmitBtn');
+            missionStatusAlert = document.getElementById('missionStatusAlert');
+
+            mainModal = document.getElementById('consultationModal');
+            mainModalContent = mainModal ? mainModal.querySelector('.transform') || mainModal.firstElementChild : null;
+
+            roadmapModal = document.getElementById('roadmapModal');
+            roadmapModalContent = roadmapModal ? roadmapModal.querySelector('.transform') || roadmapModal.firstElementChild : null;
+
+            roadmapLeftSidebar = document.getElementById('roadmapLeftSidebar');
+            roadmapSidebarTitle = document.getElementById('roadmapSidebarTitle');
+            roadmapSidebarDesc = document.getElementById('roadmapSidebarDesc');
+            dynamicRoadmapContent = document.getElementById('dynamicRoadmapContent');
+
             hfGrade = document.getElementById('hf_grade');
             hfClass = document.getElementById('hf_class');
             hfNumber = document.getElementById('hf_number');
@@ -2281,6 +2259,26 @@
             hfCategory = document.getElementById('hf_category');
             hfContent = document.getElementById('hf_content');
             hiddenFormSender = document.getElementById('hiddenFormSender');
+
+            // 바깥 여백 터치 시 자동 닫힘 바인딩
+            if (roadmapModal) {
+                roadmapModal.addEventListener('click', (e) => {
+                    if (e.target === roadmapModal) closeRoadmapModal();
+                });
+            }
+            if (mainModal) {
+                mainModal.addEventListener('click', (e) => {
+                    if (e.target === mainModal) closeModal();
+                });
+            }
+
+            // 폼 전송 이벤트 리스너 등록
+            if (form) {
+                form.addEventListener('submit', (e) => executeInvisibleSubmit(e, form, submitBtn, statusAlert));
+            }
+            if (missionForm) {
+                missionForm.addEventListener('submit', (e) => executeInvisibleSubmit(e, missionForm, missionSubmitBtn, missionStatusAlert));
+            }
 
             // GSAP 초기 스크롤 트리거 정의
             gsap.registerPlugin(ScrollTrigger);
