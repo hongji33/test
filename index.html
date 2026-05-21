@@ -329,7 +329,7 @@
                         <p class="text-slate-500 text-sm leading-relaxed mb-8">기획, 연출, 출연, 촬영, 편집을 모두 담아 오션 숏폼 무비 어워즈에 정식 출품해 봅니다.</p>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5 relative z-10 mt-auto">
-                        <button onclick="openStudy('lv4')" class="py-2.5 bg-rose-50 text-rose-600 font-bold text-xs rounded-xl hover:bg-slate-800 transition">배우기</button>
+                        <button onclick="openStudy('lv4')" class="py-2.5 bg-rose-50 text-rose-600 font-bold text-xs rounded-xl hover:bg-rose-100 transition">배우기</button>
                         <button onclick="openQuiz('lv4')" class="py-2.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">도전! 퀴즈</button>
                     </div>
                 </div>
@@ -692,6 +692,7 @@
                     <!-- 상태 메시지 알림 영역 -->
                     <div id="statusAlert" class="hidden p-3 rounded-lg text-xs font-medium transition-all duration-300"></div>
 
+                    <!-- 전송 버튼 -->
                     <div>
                         <button type="submit" id="submitBtn" class="w-full py-3 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-md hover:bg-slate-800 transition-colors flex items-center justify-center space-x-2">
                             <span>보내기</span>
@@ -924,7 +925,7 @@
         let roadmapLeftSidebar, roadmapSidebarTitle, roadmapSidebarDesc, dynamicRoadmapContent;
         let hfGrade, hfClass, hfNumber, hfName, hfCategory, hfContent, hiddenFormSender;
 
-        /* ================= 5대 미션 데이터 구조체 정의 ================= */
+        /* ================= 5대 미션 데이터 구조체 정의 (미션 2,3,4,5 Step 내용 및 체크리스트 정밀 보완 완료) ================= */
         const MISSIONS_DATA = {
             1: {
                 active: true, 
@@ -950,14 +951,14 @@
                 title: "조금씩 꼬물꼬물!<br><span class=\"text-sky-400 serif-font\">'움직이는 사물'</span> 만들기",
                 category: "[오늘의 영상 미션] 사물 스톱모션",
                 steps: [
-                    "<strong>Step 1. 움직일 피사체 선정</strong><br>지우개, 가위, clay, 장난감 등 교실에서 흔하게 찾아볼 수 있는 사물을 1개 고릅니다.",
-                    "<strong>Step 2. 미세 간격 사진 촬영</strong><br>카메라가 고정된 상태에서 사물을 1cm씩 조금씩 움직이고 사진을 1장씩 뚝뚝 찍습니다.",
-                    "<strong>Step 3. 프레임 합성</strong><br>사진을 편집기 타임라인에 부드럽게 붙이고 장당 0.1~0.2초의 빠른 프레임 속도로 이어서 완성해 보세요!"
+                    "<strong>Step 1. 움직일 피사체 선정</strong><br>지우개, 가위, clay, 장난감 등 미술실 및 교실에서 흔히 볼 수 있는 소형 사물을 골라 구도를 배치합니다.",
+                    "<strong>Step 2. 1cm씩 정교하게 촬영</strong><br>스마트폰을 거치대나 책에 기대어 단단히 고정하고, 사물을 아주 미세하게 움직이면서 무음 카메라로 사진을 1장씩 이어서 연속 촬영합니다.",
+                    "<strong>Step 3. 프레임 엮어 재생하기</strong><br>무료 편집 앱(CapCut 등)에 촬영한 여러 사진 클립들을 얹고, 장당 길이를 0.1~0.2초 내외로 조절하여 사물이 살아난 듯한 10초 영상을 완성합니다!"
                 ],
                 checklist: [
-                    "촬영하는 동안 카메라나 폰이 흔들리지 않고 확실히 고정되었나요?",
-                    "각 컷의 움직임이 너무 불규칙하지 않고 끊김 없이 이어지나요?",
-                    "통통 튀는 사운드 이펙트나 장난스러운 효과음이 포함되었나요?"
+                    "촬영이 끝날 때까지 카메라 구도나 폰의 물리적 흔들림 없이 한 자리에 완전히 잘 고정되었나요?",
+                    "사물이 뚝뚝 심하게 끊기지 않고 마치 혼자 스르르 꼬물거리듯 매끄럽게 연결되나요?",
+                    "움직이는 리듬에 맞춰 아기자기하고 귀여운 장난감 스타일 효과음(SFX)이 정비되어 있나요?"
                 ]
             },
             3: {
@@ -967,14 +968,14 @@
                 title: "시간의 신비로움!<br><span class=\"text-teal-400 serif-font\">'미술실 타임랩스'</span> 그리기",
                 category: "[오늘의 영상 미션] 미술실 타임랩스",
                 steps: [
-                    "<strong>Step 1. 고정 삼각대 설치</strong><br>미술실 한켠에 구도를 잡은 후 스마트폰을 삼각대나 책상 위에 단단하게 고정하세요.",
-                    "<strong>Step 2. 타임랩스/배속 촬영</strong><br>미술 시간 동안 조용히 흘러가는 학급 친구들의 예술적 행위를 긴 호흡(최하 15분 이상)으로 찍습니다.",
-                    "<strong>Step 3. 연출 자막 삽입</strong><br>지루하지 않게 앞뒤 속도를 8배속~16배속으로 맞추고 '작품 시작' 등 시간의 문장을 장식해 보세요."
+                    "<strong>Step 1. 삼각대 거치 및 앵글 잡기</strong><br>친구들과 교실 전체를 잘 담아내기 위한 구도로 책상 구석 자리에 삼각대를 설치하고 구도를 고정해 줍니다.",
+                    "<strong>Step 2. 미술 시간 실시간 촬영</strong><br>스마트폰 기본 카메라의 '타임랩스' 모드를 켜두거나 배속 비디오 촬영 기능을 켜고, 10~15분 동안 진행되는 활동을 쭉 녹화합니다.",
+                    "<strong>Step 3. 배속 튜닝과 인트로 자막</strong><br>비디오 속도를 8배속에서 최고 16배속까지 당겨주어 15초 내외로 축약시키고, 오프닝에 '미술실 타임랩스 다큐' 자막을 띄워 완성합니다!"
                 ],
                 checklist: [
-                    "인물의 초상권 문제를 인지하고 적당히 먼 구도로 촬영되었나요?",
-                    "시간의 흐름이 한 눈에 역동적으로 느껴지도록 속도 제어가 잘 되었나요?",
-                    "미술실 분위기를 한층 우아하게 만들어줄 가벼운 로파이 재즈나 클래식 BGM을 깔았나요?"
+                    "친구들의 개인 초상권 침해 요소를 고려하여 얼굴이 심하게 비치지 않거나 적당한 거리를 두고 촬영했나요?",
+                    "미술실의 가속 흐름(시간의 압축)이 한눈에 들어올 수 있도록 재생 배속 속도가 다이나믹하게 설계되었나요?",
+                    "정적인 움직임과 잘 어울리는 잔잔한 재즈나 잔잔한 로파이 장르의 배경음악(BGM)이 선택되었나요?"
                 ]
             },
             4: {
@@ -984,14 +985,14 @@
                 title: "우리는 어디로든 갈 수 있어!<br><span class=\"text-emerald-400 serif-font\">'그린스크린 합성'</span> 영상",
                 category: "[오늘의 영상 미션] 크로마키 합성",
                 steps: [
-                    "<strong>Step 1. 녹색 스크린 앞 연기</strong><br>미술실 한쪽에 설치된 초록색 천 앞에서 마치 가상의 공간에 있는 것처럼 실감 나는 제스처 연기를 해보세요.",
-                    "<strong>Step 2. 크로마키 툴 입히기</strong><br>모바일 CapCut이나 컴퓨터 프로그램에서 크로마키 키어 툴을 활용해 녹색을 투명하게 지웁니다.",
-                    "<strong>Step 3. 어메이징한 배경 덧대기</strong><br>우주 공간이나 무시무시한 정글 등의 영상을 배경 트랙에 깔고, 인물의 테두리를 정교하게 깎아 다듬으세요."
+                    "<strong>Step 1. 그린 스킨 앞 가상 연기</strong><br>미술실에 마련된 녹색 크로마키 천 앞에 서서, 실제로 우주 공간이나 깊은 동굴을 헤치고 나가는 듯한 생생한 모션을 연기합니다.",
+                    "<strong>Step 2. 툴로 초록색 지우기</strong><br>CapCut 편집 화면의 '크로마키' 기능을 누르고 화면의 초록색 영역 스포이드를 찍어 지운 뒤, 합성용 SF 우주 혹은 사막 영상을 깔아줍니다.",
+                    "<strong>Step 3. 테두리 노이즈 제거</strong><br>머리카락이나 어깨 주변에 자잘하게 남은 녹색 지저분한 노이즈를 크로마키 강도를 섬세하게 높여 깔끔하게 깎아내어 합성을 완료합니다!"
                 ],
                 checklist: [
-                    "인물의 옷이나 장식에 녹색이 포함되어 함께 지워지진 않았나요?",
-                    "합성된 배경 이미지와 인물의 그림자/원근감이 큰 이질감 없이 어울리나요?",
-                    "합성된 가상 공간의 몰입을 더해줄 실제 환경음(우주선 소리, 정글 바람 등)이 깔렸나요?"
+                    "인물의 옷이나 장식에 녹색이 포함되어 배경과 함께 뚫려버린 곳은 없나요?",
+                    "합성된 미지의 우주/랜드마크 풍경의 비율(종횡비)과 크로마키 인물의 원근 앵글 비율이 어색하지 않나요?",
+                    "가상 여행지의 현장 분위기를 한 단계 업그레이드해 줄 효과음(정글 바람, 파도 소리, 우주선 내부 사운드 등)이 내장되어 있나요?"
                 ]
             },
             5: {
@@ -1001,9 +1002,9 @@
                 title: "진짜 감독들의 승부!<br><span class=\"text-rose-400 serif-font\">'숏폼 무비'</span> 정식 출품",
                 category: "[오늘의 영상 미션] 숏폼 어워드 출품",
                 steps: [
-                    "<strong>Step 1. 시나리오 및 기획서 작성</strong><br>팀원들과 아이디어를 도출하여 1분 이내의 명확한 기승전결이 있는 시나리오를 구상합니다.",
-                    "<strong>Step 2. 디테일한 카메라 무빙</strong><br>앵글, 풀샷, 바스트샷 등 다양한 촬영 컷을 기획하고 부드럽게 무빙하며 녹화합니다.",
-                    "<strong>Step 3. 엔딩 크레딧 마무리</strong><br>자막 안전 영역을 확실하게 지킨 고화질 영상 뒤편에 팀원들과 감사의 내용을 크레딧으로 장식하세요!"
+                    "<strong>Step 1. 콘티(스토리보드) 구상</strong><br>친구들과 3인 이상 조를 짜서 어떤 재미있는 스토리(기승전결)를 숏폼에 담을지 만화책 기획 콘티로 구상해 둡니다.",
+                    "<strong>Step 2. 카메라 무빙 분할 촬영</strong><br>하이앵글, 웅장한 로우앵글, 바스트샷 등 시나리오에 맞는 다양한 구도의 카메라 렌즈 각도 기법을 활용하여 디테일하게 나뉘어 찍습니다.",
+                    "<strong>Step 3. 엔딩 크레딧과 규격 완료</strong><br>자막을 넣을 때 가리지 않도록 지정된 안전 영역(Safe Area)을 지키고, 마지막 장면에 함께 고생한 역할 명단을 띄워 마스터링합니다."
                 ],
                 checklist: [
                     "출품 영상의 종횡비가 가로 또는 세로 표준 비율로 잘 어우러지나요?",
@@ -1026,7 +1027,7 @@
                 term: "프레임 레이트 (FPS)",
                 img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=500",
                 easy: "플립북 낱장 카드 넘기는 속도!",
-                desc: "FPS(Frames Per Second)는 초당 보여지는 정지 이미지 사진 개수를 뜻해요. 24fps는 감성적인 영화 느낌, 30fps는 흔한 방송 예능 느낌, 60fps는 물 흐르듯 아주 매끄럽고 부드러운 댄스나 게임 화면에 적격입니다.",
+                desc: "FPS(Frames Per Second)는 초당 보여지는 정지 이미지 사진 개수를 뜻해요. 24fps는 감성적인 영화 느낌, 30fps는 흔한 방송 예능 느낌, 60fps는 물 흐르듯 아주 매끄럽고 부드운 댄스나 게임 화면에 적격입니다.",
                 hint: "ㅍㄹㅇㄹㅇㅌ"
             },
             {
@@ -1040,7 +1041,7 @@
                 term: "비트 싱크 (Beat Sync)",
                 img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=500",
                 easy: "음악 쿵! 하는 소리에 맞춰 화면 챡! 바뀌기!",
-                desc: "음악의 드럼 비트나 강력한 클라이맥스 터지는 비트에 칼같이 맞춰 장면을 전환하는 기법입니다. 영상과 비트가 한 호흡으로 어우러져 엄청난 몰입감을 줍니다.",
+                desc: "음악의 드럼 비트나 강력한 클라이맥스 터지는 비트에 칼같이 맞춰 장면을 전환하는 기법입니다. 영상 og 비트가 한 호흡으로 어우러져 엄청난 몰입감을 줍니다.",
                 hint: "ㅂㅌㅅㅋ"
             },
             {
@@ -1157,183 +1158,54 @@
             }
         ];
 
-        /* ================= 멀티페이지 퀴즈용 레벨별 데이터 딕셔너리 ================= */
-        const ROADMAP_DATA = {
-            lv1: {
-                title: "LV 1 스마트폰 설정 & 구도",
-                themeClass: "bg-indigo-600",
-                slides: [
-                    {
-                        img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=600",
-                        title: "1단계: 고화질을 향한 세팅! 🎬",
-                        desc: "친구들과 숏폼을 찍을 때 흐리게 나오는 경우가 있죠? 폰카메라 설정에서 <strong>해상도를 FHD 1080p</strong> 이상으로 꼭 높여야 합니다! 만약 슬로우 모션이나 부드러운 댄스 영상을 찍고 싶다면 프레임 레이트(fps)를 <strong>60fps</strong>로 맞춰보세요. 화면이 훨씬 매끄러워져요!"
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=600",
-                        title: "2단계: 마법의 3분할 격자선 📏",
-                        desc: "화면 구도가 이상하게 치우친다면 <strong>안내 격자선</strong>을 켜세요! 수평과 수직으로 그어지는 4개의 선이 만나는 교차점 위에 주인공이나 재미있는 대상을 올려두는 것만으로도, 사람들의 시선이 그곳에 착 붙는 마법 같은 비율(3분할 구도)을 완성할 수 있답니다."
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=600",
-                        title: "3단계: 촬영 직전의 렌즈 샤워 🧼",
-                        desc: "카메라 렌즈에 묻어있는 지문이나 먼지는 영상에서 빛 번짐 현상을 만들어요. 촬영 직전 안경수건이나 소매 끝으로 쓱 문질러 주는 간단한 습관이 유튜버들만이 아는 숨겨진 최고의 장비 보정이랍니다!"
-                    }
-                ],
-                quizzes: [
-                    {
-                        question: "화면을 가로지르는 수평선과 수직선을 그어 대상을 중앙이나 교차점에 맞추어 가장 완벽한 화면 구도를 이끌어내는 이 기본 법칙의 명칭은 무엇인가요?",
-                        options: ["1. 4각 구도", "2. 3분할 구도", "3. 크로마키 비율", "4. 원형 구도"],
-                        answer: 2,
-                        feedback: "맞아요! 3분할 구도는 전 세계 감독님들이 가장 사랑하는 비율이랍니다."
-                    },
-                    {
-                        question: "스마트폰 카메라 설정에서 초당 프레임 수(FPS)를 60fps로 설정하면 30fps보다 어떤 장점이 생길까요?",
-                        options: ["1. 배터리가 무조건 2배 오래 간다.", "2. 화면이 끊기지 않고 아주 부드럽게 재생된다.", "3. 용량이 10배 작아진다.", "4. 무지개색 필터가 씌워진다."],
-                        answer: 2,
-                        feedback: "정답! 높은 프레임은 끊김 없는 생동감 넘치는 움직임을 가능하게 합니다."
-                    },
-                    {
-                        question: "동영상을 촬영하기 직전 렌즈에 빛이 지저분하게 번지는 것을 막기 위해 반드시 실천해야 할 가장 간단하고 훌륭한 습관은 무엇인가요?",
-                        options: ["1. 스마트폰 전원을 꺾다 켠다.", "2. 렌즈 클리너나 깨끗한 천으로 가볍게 닦는다.", "3. 손가락에 침을 발라 비빈다.", "4. 필터를 10개 씌운다."],
-                        answer: 2,
-                        feedback: "정답입니다! 지문을 깨끗하게 지우는 기본이 명작 비디오를 탄생시키는 기본 자세입니다."
-                    }
-                ]
-            },
-            lv2: {
-                title: "LV 2 컷 편집 & BGM",
-                themeClass: "bg-sky-500",
-                slides: [
-                    {
-                        img: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600",
-                        title: "1단계: '어...음...' 버리기 (점프컷) ✂️",
-                        desc: "우리가 말을 할 때 무의식중에 많이 말하는 불필요한 공백을 가차 없이 싹둑 자르는 것을 <strong>컷 편집</strong>이라고 해요. 이렇게 빈 공간을 삭제하면 비디오가 쉴 틈 없이 전개되어 시청자가 이탈할 틈을 주지 않게 됩니다."
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=500",
-                        title: "2단계: 비트 싱크(Beat Sync)가 뭐야? 🎵",
-                        desc: "신나는 댄스 음악이나 긴장감 넘치는 비트의 타격 시점에 맞추어 비디오 화면을 샤샥 넘겨보세요! 이것을 <strong>비트 싱크</strong>라고 부르며, 듣는 소리와 보는 화면이 하나의 호흡처럼 일치하여 시청자들의 눈과 귀를 사로잡을 수 있습니다."
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
-                        title: "3단계: 귀를 부드럽게, 페이드(Fade) 효과 🔉",
-                        desc: "음악이 갑자기 '뚝!' 끊어지면 깜짝 놀라겠죠? 배경 음악이 시작할 때는 서서히 커지는 <strong>페이드 인(Fade-in)</strong>을, 비디오가 끝날 때는 서서히 작아지는 <strong>페이드 아웃(Fade-out)</strong> 기능을 주어 오디오의 여운을 부드럽게 조율하세요."
-                    }
-                ],
-                quizzes: [
-                    {
-                        question: "불필요한 공백이나 말실수를 정교하게 가위질하여 영상의 리듬감과 몰입감을 최고조로 올려주는 기본적인 편집 기법을 무엇이라고 하나요?",
-                        options: ["1. 점프 스크롤", "2. 컷 편집", "3. 비트 체이서", "4. 크로마킹"],
-                        answer: 2,
-                        feedback: "정답! 컷 편집은 불필요한 부분을 덜어내고 꿀잼만 가득 담아내는 편집의 심장이랍니다!"
-                    },
-                    {
-                        question: "드럼 비트나 강력한 사운드가 터지는 순간에 비디오 클립의 장면 전환을 맞추어 쾌감을 이끌어내는 기법의 이름은?",
-                        options: ["1. 비트 싱크(Beat Sync)", "2. 볼륨 쉐이더", "3. 비트 매트릭스", "4. 앵글 트릭"],
-                        answer: 1,
-                        feedback: "소름 돋는 타이밍의 연출! 비트 싱크를 정답으로 완벽히 골랐어요."
-                    },
-                    {
-                        question: "음악이 끝날 때 소리가 자연스럽게 점점 작아지면서 소멸되도록 처리하여 여운을 남겨주는 볼륨 조절 옵션은?",
-                        options: ["1. 페이드 아웃(Fade-out)", "2. 자막 오버레이", "3. 믹서 페이즈", "4. 페이드 인"],
-                        answer: 1,
-                        feedback: "그렇죠! 서서히 암전되듯 볼륨을 가라앉히는 ‘페이드 아웃’을 마스터하셨습니다."
-                    }
-                ]
-            },
-            lv3: {
-                title: "LV 3 크로마키 & 특수효과",
-                themeClass: "bg-emerald-500",
-                slides: [
-                    {
-                        img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=600",
-                        title: "1단계: 크로마키(Chroma Key) 합성의 비밀 💚",
-                        desc: "교실 한구석에 <strong>녹색 스킨</strong>을 세우고 친구들을 촬영하면, 녹색 부분만 투명하게 지우고 그 자리에 우주나 하와이 해변 같은 어떤 가상의 공간이든 입힐 수 있어요! 녹색이 인체와 가장 반대되는 색상이기 때문이에요."
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600",
-                        title: "2단계: 그림자를 피하세요! ☀️",
-                        desc: "녹색 스크린에 인물이 바짝 붙어 조명을 가려버리면 검은 <strong>그림자</strong>가 지게 됩니다. 이 그림자 진 부분은 앱에서 '녹색'으로 판정하지 못해 깔끔한 합성이 실패하므로 인물을 스크린에서 꼭 1m 이상 떨어뜨리세요!"
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&fit=crop&q=80&w=600",
-                        title: "3단계: VFX 특수효과 튜닝 🪄",
-                        desc: "합성 툴을 사용해 테두리에 지저분한 녹색 실선이 남았다면, 강도를 섬세하게 올려서 가장자리를 깎아주세요. 우주 비행사나 가상의 영웅이 진짜 배경과 한 몸이 되는 정교함을 자랑할 수 있답니다."
-                    }
-                ],
-                quizzes: [
-                    {
-                        question: "인체의 피부톤과 가장 반대되는 색상(보색 관계)의 스크린을 등지고 찍어 가상의 시공간 배경을 합성하는 비주얼 특수효과 기법은?",
-                        options: ["1. 모션 트랙", "2. 크로마키(Chroma Key)", "3. 프레임 블렌딩", "4. 노출 합성"],
-                        answer: 2,
-                        feedback: "정답! 그린스크린 합성이라 불리는 크로마키 기법입니다."
-                    },
-                    {
-                        question: "합성을 더 완벽하게 진행하기 위해 촬영 중에 녹색 스크린에 생기지 않도록 주의해야 하는 가장 큰 훼방꾼은?",
-                        options: ["1. 강한 조명", "2. 인물의 진한 그림자", "3. 배경음악", "4. 시원한 에어컨 바람"],
-                        answer: 2,
-                        feedback: "훌륭합니다! 균일한 색상을 해치는 그림자는 깔끔한 합성을 가로막는 요소입니다."
-                    },
-                    {
-                        question: "배경과 인물이 한 몸처럼 느껴지도록 합성을 진행할 때, 인물은 녹색 스크린으로부터 약 어느 정도 거리 이상 떨어지는 것이 좋나요?",
-                        options: ["1. 딱 붙을수록 좋으므로 0cm", "2. 최소 1m 이상 이격", "3. 약 20m 뒤쪽", "4. 학교 운동장 밖"],
-                        answer: 2,
-                        feedback: "맞아요! 빗 반사와 그림자를 분리시키기 위해 1미터 이상의 이격은 기본입니다."
-                    }
-                ]
-            },
-            lv4: {
-                title: "LV 4 숏폼 영화제 출품",
-                themeClass: "bg-rose-500",
-                slides: [
-                    {
-                        img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=600",
-                        title: "1단계: 종횡비의 차이를 느껴봐! 📐",
-                        desc: "영화를 상영하는 넓은 스크린과 유튜브 가로 영상은 <strong>16:9</strong> 비율이에요. 반면에 우리의 일상을 장악하고 있는 릴스, 쇼츠는 <strong>9:16</strong> 비율이랍니다. 만들고자 하는 영상이 가로형인지 세로형인지 미리 구상하여 알맞은 카메라 모드로 촬영해야 잘리지 않아요!"
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=600",
-                        title: "2단계: 자막의 대피소, 안전 영역 ⚠️",
-                        desc: "쇼츠를 볼 때 각종 버튼이나 친구들의 댓글 입력창이 아래쪽 자막을 가려서 짜증 났던 경험 있으시죠? 자막은 플랫폼 인터페이스에 가리지 않는 중앙 하단이나 상단 같은 <strong>안전 영역(Safe Area)</strong>에 영리하게 배치해 주어야 센스 만점 편집자 소리를 듣습니다."
-                    },
-                    {
-                        img: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&q=80&w=600",
-                        title: "3단계: 엔딩 크레딧과 저작권 지키기 🏆",
-                        desc: "우리가 함께 고생하며 감독, 촬영, 출연, 소리를 도맡았던 명단을 영상 마지막 부분에 흘려보내는 <strong>엔딩 크레딧</strong>을 꼭 띄워보세요. 덧붙여 상업 목적이 아니더라도 영리하게 무료 저작권 소스를 썼다고 밝혀주는 예의가 진정한 크리에이터의 모습입니다."
-                    }
-                ],
-                quizzes: [
-                    {
-                        question: "스마트폰 쇼츠, 릴스 등 대표적인 숏폼 서비스의 글로벌 표준 화면 규격(종횡비)은 몇 대 몇 인가요?",
-                        options: ["1. 4:3 비율", "2. 16:9 비율", "3. 9:16 비율", "4. 1:1 비율"],
-                        answer: 3,
-                        feedback: "정답입니다! 세로로 가득 채워 압도적인 몰입을 전하는 9대16이 숏폼 표준입니다."
-                    },
-                    {
-                        question: "릴스나 쇼츠 서비스에 올라갈 영상 자막을 구성할 때 인터페이스(좋아요/댓글창 등)에 가리지 않도록 지정된 화면 범위를 무엇이라고 부르나요?",
-                        options: ["1. 블루 안전구역(Blue Zone)", "2. 자막 대피소", "3. 안전 영역(Safe Area)", "4. 미디어 세이프티 가드"],
-                        answer: 3,
-                        feedback: "정답! 자막이나 주요 개체는 꼭 '안전 영역'에 넣어서 답답함을 해소해주세요!"
-                    },
-                    {
-                        question: "함께 아이디어를 모으고 밤새 연출, 출연, 소리를 담당했던 명단과 감사한 음원 원작자 출처를 영상 뒤편에 장식하는 이것의 명칭은 무엇입니까?",
-                        options: ["1. 프론트 인트로", "2. 엔딩 크레딧(Ending Credits)", "3. 팀 일기장", "4. 무비 라이선스 인덱스"],
-                        answer: 2,
-                        feedback: "최종 마침표를 찍는 품격! 엔딩 크레딧까지 완벽한 정답 행렬이었습니다."
-                    }
-                ]
-            }
-        };
-
-        // 모바일 내비게이션 토글 함수
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            if (menu) {
-                if (menu.classList.contains('hidden')) {
-                    menu.classList.remove('hidden');
+        // 동적 미션 탭 활성화 변경 제어기 (안전한 선행 호출용 함수 정의)
+        function selectActiveMission(num) {
+            for (let i = 1; i <= 5; i++) {
+                const tab = document.getElementById(`tab-mission-${i}`);
+                if (!tab) continue;
+                
+                if (MISSIONS_DATA[i].active) {
+                    tab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
+                    tab.disabled = false;
+                    tab.classList.remove('mission-locked-btn', 'text-slate-400', 'cursor-not-allowed');
                 } else {
-                    menu.classList.add('hidden');
+                    tab.className = "mission-locked-btn px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed";
+                    tab.disabled = true;
                 }
+            }
+
+            const selectedTab = document.getElementById(`tab-mission-${num}`);
+            if (selectedTab && MISSIONS_DATA[num].active) {
+                selectedTab.className = "px-5 py-3 rounded-2xl font-bold text-xs transition duration-200 shadow-sm bg-indigo-600 text-white border-2 border-indigo-500";
+            }
+
+            const activeData = MISSIONS_DATA[num];
+            const subHeader = document.getElementById('currentMissionSubHeader');
+            const title = document.getElementById('currentMissionTitle');
+            const categoryInput = document.getElementById('missionCategoryInput');
+
+            // [오류 해결 포인트] 실시간 서브헤더 동적 스왑 바인딩 구현
+            if (subHeader) subHeader.innerText = activeData.sub;
+            if (title) title.innerHTML = activeData.title;
+            if (categoryInput) categoryInput.value = activeData.category;
+
+            const guideContainer = document.getElementById('currentMissionGuide');
+            if (guideContainer) {
+                guideContainer.innerHTML = activeData.steps.map(step => `
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        ${step}
+                    </div>
+                `).join('');
+            }
+
+            const chkContainer = document.getElementById('currentMissionChecklist');
+            if (chkContainer) {
+                chkContainer.innerHTML = activeData.checklist.map((item, idx) => `
+                    <label class="flex items-center space-x-3 text-sm text-slate-200 cursor-pointer select-none">
+                        <input type="checkbox" id="chk${idx + 1}" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                        <span>${item}</span>
+                    </label>
+                `).join('');
             }
         }
 
@@ -1870,6 +1742,16 @@
             }
         }
 
+        // 로드맵 수동 다음 문제 풀기 함수
+        function advanceQuiz() {
+            if (activeQuizStep < 3) {
+                activeQuizStep++;
+                renderQuizStep();
+            } else {
+                renderQuizResult();
+            }
+        }
+
         /* ================= 무손실 우회 데이터 전송 방식 엔진 바인딩 ================= */
         // 구글 앱스 스크립트 특화: CORS 차단 및 전송 거부를 원천 무효화하는 아이프레임 우회 전송 기법
         function executeInvisibleSubmit(e, targetForm, targetButton, targetAlert) {
@@ -2145,8 +2027,9 @@
                         <span class="text-[10px] font-bold ${item.active ? 'text-green-600' : 'text-slate-400'}">
                             ${item.active ? '● 학생화면 활성중' : '○ 잠금 상태'}
                         </span>
+                        <!-- 단일 미션만 활성화되므로 잠금은 수동 조작 대신 다른 미션 활성화로 대체 유도하며, 활성 상태에서 비활성화 차단 -->
                         <button onclick="toggleMissionActiveStatus(${key})" class="px-3.5 py-1.5 rounded-lg text-[11px] font-bold transition ${item.active ? 'bg-rose-50 hover:bg-rose-100 text-rose-600' : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-600'}">
-                            ${item.active ? '잠그기' : '활성화'}
+                            ${item.active ? '잠금불가' : '활성화'}
                         </button>
                     </div>
                 </div>
@@ -2154,18 +2037,22 @@
         }
 
         function toggleMissionActiveStatus(key) {
-            if (key == 1 && MISSIONS_DATA[1].active) {
-                alert("최소한 1개의 미션은 항상 켜져있어야 하므로 미션 1은 끌 수 없습니다.");
+            // [버그 수정 완료] 단일 활성화(Radio) 모델로 완전 변환
+            // 현재 활성화되어 있는 유일한 미션을 끄려고 시도하는 것을 원천 잠금 처리합니다.
+            if (MISSIONS_DATA[key].active) {
+                alert("최소 1개의 미션은 항상 학생들에게 노출되어야 합니다. 다른 미션을 활성화하면 이 미션은 자동으로 잠금(비활성화)됩니다.");
                 return;
             }
 
-            MISSIONS_DATA[key].active = !MISSIONS_DATA[key].active;
+            // 라디오 버튼 기법: 선택한 미션만 활성화(true)하고, 이전에 활성화되어 있던 미션 1을 포함한 다른 모든 미션을 일괄 비활성화(false)로 스왑합니다.
+            for (let i = 1; i <= 5; i++) {
+                MISSIONS_DATA[i].active = (i == key);
+            }
             
-            const currentTabBtn = document.getElementById(`tab-mission-${key}`);
-            const isCurrentlySelected = currentTabBtn ? currentTabBtn.classList.contains('bg-indigo-600') : false;
-            
+            // 관리자 제어반 리스트 갱신
             renderAdminMissionControls();
             
+            // 학생 화면상의 5가지 미션 선택 탭을 실시간으로 잠금/해제(disabled 유무 제어) 처리합니다.
             for (let i = 1; i <= 5; i++) {
                 const tab = document.getElementById(`tab-mission-${i}`);
                 if (!tab) continue;
@@ -2179,18 +2066,8 @@
                 }
             }
 
-            if (isCurrentlySelected && !MISSIONS_DATA[key].active) {
-                selectActiveMission(1);
-            } else {
-                let selectedNum = 1;
-                for (let j = 1; j <= 5; j++) {
-                    const tabBtn = document.getElementById(`tab-mission-${j}`);
-                    if (tabBtn && tabBtn.classList.contains('bg-indigo-600')) {
-                        selectedNum = j;
-                    }
-                }
-                selectActiveMission(selectedNum);
-            }
+            // 새로 활성화된 미션의 상세 정보로 학생 화면을 자동 변환시킵니다.
+            selectActiveMission(key);
         }
 
         // [신규 기능 추가] 관리자 내용 편집 반영 함수
