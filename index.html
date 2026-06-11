@@ -200,7 +200,7 @@
                 <div class="reveal">
                     <div class="relative">
                         <div class="aspect-[4/5] bg-slate-100 rounded-[2.5rem] overflow-hidden group">
-                             <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" alt="Art class" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800" alt="Video production" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                              <div class="absolute inset-0 bg-indigo-900/10 group-hover:bg-transparent transition-colors"></div>
                         </div>
                         <div class="absolute -bottom-10 -right-10 bg-white p-8 rounded-3xl shadow-2xl border border-slate-50 hidden lg:block">
@@ -1158,6 +1158,174 @@
             }
         ];
 
+        /* ================= 멀티페이지 퀴즈용 레벨별 데이터 딕셔너리 ================= */
+        const ROADMAP_DATA = {
+            lv1: {
+                title: "LV 1 스마트폰 설정 & 구도",
+                themeClass: "bg-indigo-600",
+                slides: [
+                    {
+                        img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=600",
+                        title: "1단계: 고화질을 향한 세팅! 🎬",
+                        desc: "친구들과 숏폼을 찍을 때 흐리게 나오는 경우가 있죠? 폰카메라 설정에서 <strong>해상도를 FHD 1080p</strong> 이상으로 꼭 높여야 합니다! 만약 슬로우 모션이나 부드러운 댄스 영상을 찍고 싶다면 프레임 레이트(fps)를 <strong>60fps</strong>로 맞춰보세요. 화면이 훨씬 매끄러워져요!"
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=600",
+                        title: "2단계: 마법의 3분할 격자선 📏",
+                        desc: "화면 구도가 이상하게 치우친다면 <strong>안내 격자선</strong>을 켜세요! 수평과 수직으로 그어지는 4개의 선이 만나는 교차점 위에 주인공이나 재미있는 대상을 올려두는 것만으로도, 사람들의 시선이 그곳에 착 붙는 마법 같은 비율(3분할 구도)을 완성할 수 있답니다."
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=600",
+                        title: "3단계: 촬영 직전의 렌즈 샤워 🧼",
+                        desc: "카메라 렌즈에 묻어있는 지문과 먼지는 영상에서 빛 번짐 현상을 만들어요. 촬영 직전 안경수건이나 소매 끝으로 쓱 문질러 주는 간단한 습관이 유튜버들만이 아는 숨겨진 최고의 장비 보정이랍니다!"
+                    }
+                ],
+                quizzes: [
+                    {
+                        question: "화면을 가로지르는 수평선과 수직선을 그어 대상을 중앙이나 교차점에 맞추어 가장 완벽한 화면 구도를 이끌어내는 이 기본 법칙의 명칭은 무엇인가요?",
+                        options: ["1. 4각 구도", "2. 3분할 구도", "3. 크로마키 비율", "4. 원형 구도"],
+                        answer: 2,
+                        feedback: "맞아요! 3분할 구도는 전 세계 감독님들이 가장 사랑하는 비율이랍니다."
+                    },
+                    {
+                        question: "스마트폰 카메라 설정에서 초당 프레임 수(FPS)를 60fps로 설정하면 30fps보다 어떤 장점이 생길까요?",
+                        options: ["1. 배터리가 무조건 2배 오래 간다.", "2. 화면이 끊기지 않고 아주 부드럽게 재생된다.", "3. 용량이 10배 작아진다.", "4. 무지개색 필터가 씌워진다."],
+                        answer: 2,
+                        feedback: "정답! 높은 프레임은 끊김 없는 생동감 넘치는 움직임을 가능하게 합니다."
+                    },
+                    {
+                        question: "동영상을 촬영하기 직전 렌즈에 빛이 지저분하게 번지는 것을 막기 위해 반드시 실천해야 할 가장 간단하고 훌륭한 습관은 무엇인가요?",
+                        options: ["1. 스마트폰 전원을 껐다 켠다.", "2. 렌즈 클리너나 깨끗한 천으로 가볍게 닦는다.", "3. 손가락에 침을 발라 비빈다.", "4. 필터를 10개 씌운다."],
+                        answer: 2,
+                        feedback: "정답입니다! 지문을 깨끗하게 지우는 기본이 명작 비디오를 탄생시키는 기본 자세입니다."
+                    }
+                ]
+            },
+            lv2: {
+                title: "LV 2 컷 편집 & BGM",
+                themeClass: "bg-sky-500",
+                slides: [
+                    {
+                        img: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600",
+                        title: "1단계: '어...음...' 버리기 (점프컷) ✂️",
+                        desc: "우리가 말을 할 때 무의식중에 많이 말하는 불필요한 공백을 가차 없이 싹둑 자르는 것을 <strong>컷 편집</strong>이라고 해요. 이렇게 빈 공간을 삭제하면 비디오가 쉴 틈 없이 전개되어 시청자가 이탈할 틈을 주지 않게 됩니다."
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=600",
+                        title: "2단계: 비트 싱크(Beat Sync)가 뭐야? 🎵",
+                        desc: "신나는 댄스 음악이나 긴장감 넘치는 비트의 타격 시점에 맞추어 비디오 화면을 샤샥 넘겨보세요! 이것을 <strong>비트 싱크</strong>라고 부르며, 듣는 소리와 보는 화면이 하나의 호흡처럼 일치하여 시청자들의 눈과 귀를 사로잡을 수 있습니다."
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600",
+                        title: "3단계: 귀를 부드럽게, 페이드(Fade) 효과 🔉",
+                        desc: "음악이 갑자기 '뚝!' 끊어지면 깜짝 놀라겠죠? 배경 음악이 시작할 때는 서서히 커지는 <strong>페이드 인(Fade-in)</strong>을, 비디오가 끝날 때는 서서히 작아지는 <strong>페이드 아웃(Fade-out)</strong> 기능을 주어 오디오의 여운을 부드럽게 조율하세요."
+                    }
+                ],
+                quizzes: [
+                    {
+                        question: "불필요한 공백이나 말실수를 정교하게 가위질하여 영상의 리듬감과 몰입감을 최고조로 올려주는 기본적인 편집 기법을 무엇이라고 하나요?",
+                        options: ["1. 점프 스크롤", "2. 컷 편집", "3. 비트 체이서", "4. 크로마킹"],
+                        answer: 2,
+                        feedback: "정답! 컷 편집은 불필요한 부분을 덜어내고 꿀잼만 가득 담아내는 편집의 심장이랍니다!"
+                    },
+                    {
+                        question: "드럼 비트나 강력한 사운드가 터지는 순간에 비디오 클립의 장면 전환을 맞추어 쾌감을 이끌어내는 기법의 이름은?",
+                        options: ["1. 비트 싱크(Beat Sync)", "2. 볼륨 쉐이더", "3. 비트 매트릭스", "4. 앵글 트릭"],
+                        answer: 1,
+                        feedback: "소름 돋는 타이밍의 연출! 비트 싱크를 정답으로 완벽히 골랐어요."
+                    },
+                    {
+                        question: "음악이 끝날 때 소리가 자연스럽게 점점 작아지면서 소멸되도록 처리하여 여운을 남겨주는 볼륨 조절 옵션은?",
+                        options: ["1. 페이드 아웃(Fade-out)", "2. 자막 오버레이", "3. 믹서 페이즈", "4. 페이드 인"],
+                        answer: 1,
+                        feedback: "그렇죠! 서서히 암전되듯 볼륨을 가라앉히는 ‘페이드 아웃’을 마스터하셨습니다."
+                    }
+                ]
+            },
+            lv3: {
+                title: "LV 3 크로마키 & 특수효과",
+                themeClass: "bg-emerald-500",
+                slides: [
+                    {
+                        img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=600",
+                        title: "1단계: 크로마키(Chroma Key) 합성의 비밀 💚",
+                        desc: "교실 한구석에 <strong>녹색 스킨</strong>을 세우고 친구들을 촬영하면, 녹색 부분만 투명하게 지우고 그 자리에 우주나 하와이 해변 같은 어떤 가상의 공간이든 입힐 수 있어요! 녹색이 인체와 가장 반대되는 색상이기 때문이에요."
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600",
+                        title: "2단계: 그림자를 피하세요! ☀️",
+                        desc: "녹색 스크린에 인물이 바짝 붙어 조명을 가려버리면 검은 <strong>그림자</strong>가 지게 됩니다. 이 그림자 진 부분은 앱에서 '녹색'으로 판정하지 못해 깔끔한 합성이 실패하므로 인물을 스크린에서 꼭 1m 이상 떨어뜨리세요!"
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&fit=crop&q=80&w=600",
+                        title: "3단계: VFX 특수효과 튜닝 🪄",
+                        desc: "합성 툴을 사용해 테두리에 지저분한 녹색 실선이 남았다면, 강도를 섬세하게 올려서 가장자리를 깎아주세요. 우주 비행사나 가상의 영웅이 진짜 배경과 한 몸이 되는 정교함을 자랑할 수 있답니다."
+                    }
+                ],
+                quizzes: [
+                    {
+                        question: "인체의 피부톤과 가장 반대되는 색상(보색 관계)의 스크린을 등지고 찍어 가상의 시공간 배경을 합성하는 비주얼 특수효과 기법은?",
+                        options: ["1. 모션 트랙", "2. 크로마키(Chroma Key)", "3. 프레임 블렌딩", "4. 노출 합성"],
+                        answer: 2,
+                        feedback: "정답! 그린스크린 합성이라 불리는 크로마키 기법입니다."
+                    },
+                    {
+                        question: "합성을 더 완벽하게 진행하기 위해 촬영 중에 녹색 스크린에 생기지 않도록 주의해야 하는 가장 큰 훼방꾼은?",
+                        options: ["1. 강한 조명", "2. 인물의 진한 그림자", "3. 배경음악", "4. 시원한 에어컨 바람"],
+                        answer: 2,
+                        feedback: "훌륭합니다! 균일한 색상을 해치는 그림자는 깔끔한 합성을 가로막는 요소입니다."
+                    },
+                    {
+                        question: "배경과 인물이 한 몸처럼 느껴지도록 합성을 진행할 때, 인물은 녹색 스크린으로부터 약 어느 정도 거리 이상 떨어지는 것이 좋나요?",
+                        options: ["1. 딱 붙을수록 좋으므로 0cm", "2. 최소 1m 이상 이격", "3. 약 20m 뒤쪽", "4. 학교 운동장 밖"],
+                        answer: 2,
+                        feedback: "맞아요! 빛 반사와 그림자를 분리시키기 위해 1미터 이상의 이격은 기본입니다."
+                    }
+                ]
+            },
+            lv4: {
+                title: "LV 4 숏폼 영화제 출품",
+                themeClass: "bg-rose-500",
+                slides: [
+                    {
+                        img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=600",
+                        title: "1단계: 종횡비의 차이를 느껴봐! 📐",
+                        desc: "영화를 상영하는 넓은 스크런과 유튜브 가로 영상은 <strong>16:9</strong> 비율이에요. 반면에 우리의 일상을 장악하고 있는 릴스, 쇼츠는 <strong>9:16</strong> 비율이랍니다. 만들고자 하는 영상이 가로형인지 세로형인지 미리 구상하여 알맞은 카메라 모드로 촬영해야 잘리지 않아요!"
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=600",
+                        title: "2단계: 자막의 대피소, 안전 영역 ⚠️",
+                        desc: "쇼츠를 볼 때 각종 버튼이나 친구들의 댓글 입력창이 아래쪽 자막을 가려서 짜증 났던 경험 있으시죠? 자막은 플랫폼 인터페이스에 가리지 않는 중앙 하단이나 상단 같은 <strong>안전 영역(Safe Area)</strong>에 영리하게 배치해 주어야 센스 만점 편집자 소리를 듣습니다."
+                    },
+                    {
+                        img: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&q=80&w=600",
+                        title: "3단계: 엔딩 크레딧과 저작권 지키기 🏆",
+                        desc: "우리가 함께 고생하며 감독, 촬영, 출연, 소리를 도맡았던 명단을 영상 마지막 부분에 흘려보내는 <strong>엔딩 크레딧</strong>을 꼭 띄워보세요. 덧붙여 상업 목적이 아니더라도 영리하게 무료 저작권 소스를 썼다고 밝혀주는 예의가 진정한 크리에이터의 모습입니다."
+                    }
+                ],
+                quizzes: [
+                    {
+                        question: "스마트폰 쇼츠, 릴스 등 대표적인 숏폼 서비스의 글로벌 표준 화면 규격(종횡비)은 몇 대 몇 인가요?",
+                        options: ["1. 4:3 비율", "2. 16:9 비율", "3. 9:16 비율", "4. 1:1 비율"],
+                        answer: 3,
+                        feedback: "정답입니다! 세로로 가득 채워 압도적인 몰입을 전하는 9대16이 숏폼 표준입니다."
+                    },
+                    {
+                        question: "릴스나 쇼츠 서비스에 올라갈 영상 자막을 구성할 때 인터페이스(좋아요/댓글창 등)에 가리지 않도록 지정된 화면 범위를 무엇이라고 부르나요?",
+                        options: ["1. 블루 안전구역(Blue Zone)", "2. 자막 대피소", "3. 안전 영역(Safe Area)", "4. 미디어 세이프티 가드"],
+                        answer: 3,
+                        feedback: "정답! 자막이나 주요 개체는 꼭 '안전 영역'에 넣어서 답답함을 해소해주세요!"
+                    },
+                    {
+                        question: "함께 아이디어를 모으고 밤새 연출, 출연, 소리를 담당했던 명단과 감사한 음원 원작자 출처를 영상 뒤편에 장식하는 이것의 명칭은 무엇입니까?",
+                        options: ["1. 프론트 인트로", "2. 엔딩 크레딧(Ending Credits)", "3. 팀 일기장", "4. 무비 라이선스 인덱스"],
+                        answer: 2,
+                        feedback: "최종 마침표를 찍는 품격! 엔딩 크레딧까지 완벽한 정답 행렬이었습니다."
+                    }
+                ]
+            }
+        };
+
         // 동적 미션 탭 활성화 변경 제어기 (안전한 선행 호출용 함수 정의)
         function selectActiveMission(num) {
             for (let i = 1; i <= 5; i++) {
@@ -1212,7 +1380,7 @@
         /* ================= 팝업 제어 메인 로직 (독립 분리 설계) ================= */
         function openModal(mode) {
             if (!mainModal || !mainModalContent) return;
-            mainModal.classList.remove('pointer-events-none');
+            mainModal.classList.remove('pointer-events-none', 'opacity-0');
             mainModal.classList.add('opacity-100');
             mainModalContent.classList.remove('scale-95');
             mainModalContent.classList.add('scale-100');
@@ -1221,7 +1389,7 @@
 
         function closeModal() {
             if (!mainModal || !mainModalContent) return;
-            mainModal.classList.add('pointer-events-none');
+            mainModal.classList.add('pointer-events-none', 'opacity-0');
             mainModal.classList.remove('opacity-100');
             mainModalContent.classList.remove('scale-100');
             mainModalContent.classList.add('scale-95');
@@ -1236,7 +1404,7 @@
         // 로드맵 전용 신형 모달 컨트롤러 (보고된 오류 완전 조치)
         function openRoadmapModal() {
             if (!roadmapModal || !roadmapModalContent) return;
-            roadmapModal.classList.remove('pointer-events-none');
+            roadmapModal.classList.remove('pointer-events-none', 'opacity-0');
             roadmapModal.classList.add('opacity-100');
             roadmapModalContent.classList.remove('scale-95');
             roadmapModalContent.classList.add('scale-100');
@@ -1245,7 +1413,7 @@
 
         function closeRoadmapModal() {
             if (!roadmapModal || !roadmapModalContent) return;
-            roadmapModal.classList.add('pointer-events-none');
+            roadmapModal.classList.add('pointer-events-none', 'opacity-0');
             roadmapModal.classList.remove('opacity-100');
             roadmapModalContent.classList.remove('scale-100');
             roadmapModalContent.classList.add('scale-95');
@@ -1892,7 +2060,7 @@
             passwordInput.value = '';
             errorMsg.classList.add('hidden');
             
-            authModal.classList.remove('pointer-events-none');
+            authModal.classList.remove('pointer-events-none', 'opacity-0');
             authModal.classList.add('opacity-100');
             authContent.classList.remove('scale-95');
             authContent.classList.add('scale-100');
@@ -1913,7 +2081,7 @@
             
             if (!authModal || !authContent) return;
 
-            authModal.classList.add('pointer-events-none');
+            authModal.classList.add('pointer-events-none', 'opacity-0');
             authModal.classList.remove('opacity-100');
             authContent.classList.remove('scale-100');
             authContent.classList.add('scale-95');
@@ -1942,7 +2110,7 @@
 
             if (!adModal || !adContent) return;
 
-            adModal.classList.remove('pointer-events-none');
+            adModal.classList.remove('pointer-events-none', 'opacity-0');
             adModal.classList.add('opacity-100');
             adContent.classList.remove('scale-95');
             adContent.classList.add('scale-100');
@@ -1981,7 +2149,7 @@
 
             if (!adModal || !adContent) return;
 
-            adModal.classList.add('pointer-events-none');
+            adModal.classList.add('pointer-events-none', 'opacity-0');
             adModal.classList.remove('opacity-100');
             adContent.classList.remove('scale-100');
             adContent.classList.add('scale-95');
@@ -2158,23 +2326,27 @@
             }
 
             // GSAP 초기 스크롤 트리거 정의
-            gsap.registerPlugin(ScrollTrigger);
+            try {
+                gsap.registerPlugin(ScrollTrigger);
 
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach((el, index) => {
-                gsap.to(el, {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: "power4.out",
-                    delay: (index * 0.1) % 0.3
+                const revealElements = document.querySelectorAll('.reveal');
+                revealElements.forEach((el, index) => {
+                    gsap.to(el, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power4.out",
+                        delay: (index * 0.1) % 0.3
+                    });
                 });
-            });
+            } catch (err) {
+                console.warn("GSAP is not defined or failed to initialize:", err);
+            }
 
             // 깃허브 호스팅/아이프레임 특수 환경 대비 스크롤 트리거 강제 강하 안전 대몬 가동 (콘텐츠 안보임 현상 해결)
             setTimeout(() => {

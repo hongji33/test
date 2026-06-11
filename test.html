@@ -197,7 +197,7 @@
                 <div class="reveal">
                     <div class="relative">
                         <div class="aspect-[4/5] bg-slate-100 rounded-[2.5rem] overflow-hidden group">
-                             <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" alt="Art class" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800" alt="Video production" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                              <div class="absolute inset-0 bg-indigo-900/10 group-hover:bg-transparent transition-colors"></div>
                         </div>
                         <div class="absolute -bottom-10 -right-10 bg-white p-8 rounded-3xl shadow-2xl border border-slate-50 hidden lg:block">
@@ -1292,7 +1292,7 @@
 
         /* ================= 팝업 제어 메인 로직 (독립 분리 설계) ================= */
         function openModal(mode) {
-            mainModal.classList.remove('pointer-events-none');
+            mainModal.classList.remove('pointer-events-none', 'opacity-0');
             mainModal.classList.add('opacity-100');
             mainModalContent.classList.remove('scale-95');
             mainModalContent.classList.add('scale-100');
@@ -1300,7 +1300,7 @@
         }
 
         function closeModal() {
-            mainModal.classList.add('pointer-events-none');
+            mainModal.classList.add('pointer-events-none', 'opacity-0');
             mainModal.classList.remove('opacity-100');
             mainModalContent.classList.remove('scale-100');
             mainModalContent.classList.add('scale-95');
@@ -1314,7 +1314,7 @@
 
         // 로드맵 전용 신형 모달 컨트롤러 (닫기 버그 완벽 대처)
         function openRoadmapModal() {
-            roadmapModal.classList.remove('pointer-events-none');
+            roadmapModal.classList.remove('pointer-events-none', 'opacity-0');
             roadmapModal.classList.add('opacity-100');
             roadmapModalContent.classList.remove('scale-95');
             roadmapModalContent.classList.add('scale-100');
@@ -1322,7 +1322,7 @@
         }
 
         function closeRoadmapModal() {
-            roadmapModal.classList.add('pointer-events-none');
+            roadmapModal.classList.add('pointer-events-none', 'opacity-0');
             roadmapModal.classList.remove('opacity-100');
             roadmapModalContent.classList.remove('scale-100');
             roadmapModalContent.classList.add('scale-95');
